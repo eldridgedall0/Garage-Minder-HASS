@@ -1,0 +1,86 @@
+/**
+ * Garage Maintenance - Service filter UI
+ * Theme-aware version
+ */
+
+/* Service filter search */
+.service-filter-container {
+  margin-bottom: 6px;
+}
+
+.service-filter-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.service-filter-input {
+  width: 100%;
+  padding: 6px 30px 6px 28px !important;
+  font-size: 0.8rem !important;
+  border-radius: 8px !important;
+  background: var(--gm-bg-input) !important;
+  border: 1px solid var(--gm-border-input) !important;
+  color: var(--gm-text-primary) !important;
+}
+
+.service-filter-input:focus {
+  border-color: var(--gm-border-focus) !important;
+  box-shadow: var(--gm-focus-ring) !important;
+}
+
+.service-filter-icon {
+  position: absolute;
+  left: 9px;
+  font-size: 0.75rem;
+  color: var(--gm-text-muted);
+  pointer-events: none;
+}
+
+.service-filter-clear {
+  position: absolute;
+  right: 6px;
+  background: none;
+  border: none;
+  color: var(--gm-text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  line-height: 1;
+  border-radius: 4px;
+  display: none;
+  transition: all var(--gm-transition-fast);
+}
+
+.service-filter-clear:hover {
+  background: var(--gm-bg-hover);
+  color: var(--gm-text-primary);
+}
+
+.service-filter-clear.visible {
+  display: block;
+}
+
+.service-chip.filter-hidden {
+  display: none !important;
+}
+
+.service-chip.filter-match {
+  border-color: var(--gm-accent-soft);
+  background: var(--gm-accent-subtle);
+}
+
+.service-no-matches {
+  font-size: 0.75rem;
+  color: var(--gm-text-muted);
+  padding: 8px;
+  text-align: center;
+  font-style: italic;
+}
+
+.service-filter-hint {
+  font-size: 0.65rem;
+  color: var(--gm-text-muted);
+  margin-top: 3px;
+  opacity: 0.7;
+}

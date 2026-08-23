@@ -1,0 +1,20 @@
+/**
+ * Garage Maintenance - Legacy bundle
+ * Kept for backward compatibility. Prefer linking modular files directly (see index.php).
+ */
+@import url("gm.00-tokens.css");
+@import url("gm.01-base.css");
+@import url("gm.02-shell.css");
+@import url("gm.04-components.css");
+@import url("gm.03-dashboard.css");
+@import url("gm.05-entries.css");
+@import url("gm.06-attachments.css");
+@import url("gm.07-reminders.css");
+@import url("gm.08-settings.css");
+@import url("gm.09-recalls.css");
+@import url("gm.10-toast.css");
+@import url("gm.12-scrollbar.css");
+@import url("gm.13-enhancements.css");
+@import url("gm.14-service-filter.css");
+@import url("gm.11-responsive.css");
+@import url("gm.15-branding.css");

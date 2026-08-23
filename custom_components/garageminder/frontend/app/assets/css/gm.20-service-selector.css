@@ -1,0 +1,286 @@
+/**
+ * GarageMinder - Service Selector
+ * 
+ * FIXES:
+ * - Issue #10: Hide service-selector-interval labels
+ */
+
+/* Main wrapper */
+.service-selector-wrapper {
+  border: 1px solid var(--gm-border-subtle);
+  border-radius: var(--gm-radius-md);
+  background: var(--gm-bg-card);
+  overflow: hidden;
+}
+
+/* Header with search */
+.service-selector-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--gm-bg-subtle);
+  border-bottom: 1px solid var(--gm-border-subtle);
+}
+
+.service-selector-search {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  border: 1px solid var(--gm-border-subtle);
+  border-radius: var(--gm-radius-sm);
+  background: var(--gm-bg-card);
+  color: var(--gm-text-primary);
+}
+
+.service-selector-search:focus {
+  outline: none;
+  border-color: var(--gm-accent);
+  box-shadow: var(--gm-focus-ring);
+}
+
+.service-selector-count {
+  font-size: 0.7rem;
+  color: var(--gm-text-muted);
+  white-space: nowrap;
+  padding: 4px 8px;
+  background: var(--gm-bg-card);
+  border-radius: var(--gm-radius-sm);
+  border: 1px solid var(--gm-border-subtle);
+}
+
+.service-selector-count.has-selection {
+  background: var(--gm-accent-subtle);
+  color: var(--gm-accent);
+  border-color: var(--gm-accent);
+  font-weight: 500;
+}
+
+/* Services list */
+.service-selector-list {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.service-selector-empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--gm-text-muted);
+  font-size: 0.8rem;
+}
+
+.service-selector-empty a {
+  color: var(--gm-accent);
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.service-selector-empty a:hover {
+  text-decoration: underline;
+}
+
+/* Service item */
+.service-selector-item {
+  border-bottom: 1px solid var(--gm-border-subtle);
+  transition: background-color var(--gm-transition-fast);
+}
+
+.service-selector-item:last-child {
+  border-bottom: none;
+}
+
+.service-selector-item:hover {
+  background: var(--gm-bg-hover);
+}
+
+.service-selector-item.selected {
+  background: var(--gm-accent-subtle);
+}
+
+/* Main row */
+.service-selector-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.service-selector-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--gm-accent);
+  flex-shrink: 0;
+}
+
+.service-selector-label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.service-selector-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gm-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ISSUE #10: Hide interval labels */
+.service-selector-interval {
+  display: none !important;
+}
+
+/* Details row (shown when selected) */
+.service-selector-details {
+  display: none;
+  padding: 0 12px 12px 38px;
+  gap: 12px;
+}
+
+.service-selector-item.selected .service-selector-details {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.service-selector-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.service-selector-field-group > label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--gm-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.service-selector-cost-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--gm-bg-card);
+  border: 1px solid var(--gm-border-subtle);
+  border-radius: var(--gm-radius-sm);
+  overflow: hidden;
+}
+
+.service-selector-cost-wrapper .currency-symbol {
+  padding: 0 8px;
+  font-size: 0.75rem;
+  color: var(--gm-text-muted);
+  background: var(--gm-bg-subtle);
+  border-right: 1px solid var(--gm-border-subtle);
+  line-height: 28px;
+}
+
+.service-selector-cost-wrapper .service-cost-input {
+  width: 80px;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border: none;
+  background: transparent;
+  color: var(--gm-text-primary);
+}
+
+.service-selector-cost-wrapper .service-cost-input:focus {
+  outline: none;
+}
+
+.service-selector-cost-wrapper:focus-within {
+  border-color: var(--gm-accent);
+  box-shadow: var(--gm-focus-ring);
+}
+
+.service-selector-note-group {
+  flex: 1;
+  min-width: 150px;
+}
+
+.service-selector-note-group .service-note-input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  border: 1px solid var(--gm-border-subtle);
+  border-radius: var(--gm-radius-sm);
+  background: var(--gm-bg-card);
+  color: var(--gm-text-primary);
+}
+
+.service-selector-note-group .service-note-input:focus {
+  outline: none;
+  border-color: var(--gm-accent);
+  box-shadow: var(--gm-focus-ring);
+}
+
+/* Actions row */
+.service-selector-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--gm-bg-subtle);
+  border-top: 1px solid var(--gm-border-subtle);
+}
+
+.service-selector-summary {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+}
+
+.service-selector-summary .cost-summary-label {
+  color: var(--gm-text-muted);
+}
+
+.service-selector-summary .cost-summary-value {
+  font-weight: 600;
+  color: var(--gm-accent);
+}
+
+/* No matches message */
+.service-selector-no-matches {
+  padding: 16px;
+  text-align: center;
+  color: var(--gm-text-muted);
+  font-size: 0.8rem;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .service-selector-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .service-selector-details {
+    padding-left: 12px;
+    flex-direction: column;
+  }
+  
+  .service-selector-note-group {
+    min-width: 100%;
+  }
+  
+  .service-selector-actions {
+    flex-wrap: wrap;
+  }
+  
+  .service-selector-summary {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 4px;
+    justify-content: flex-end;
+  }
+}

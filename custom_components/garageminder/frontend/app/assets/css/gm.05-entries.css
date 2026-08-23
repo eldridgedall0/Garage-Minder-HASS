@@ -1,0 +1,250 @@
+/**
+ * GarageMinder - Entries (history list + entry view/edit)
+ * 
+ * FIXES:
+ * - Issue #6: Professional service badge styling with 3-badge limit and "+X more"
+ * - Issue #7: Remove "main" class distinction - all badges look the same
+ * - Issue #8: Hide badges when entry is expanded
+ */
+
+/* ============================================
+   ENTRY LIST
+   ============================================ */
+.entry-list {
+  border-radius: var(--gm-radius-lg);
+  border: 1px solid var(--gm-border);
+  background: var(--gm-bg-elevated);
+  overflow-y: auto;
+}
+
+.entry-empty {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+  padding: 30px 12px;
+  text-align: center;
+}
+
+.entry-card {
+  border-bottom: 1px solid var(--gm-border-subtle);
+}
+
+.entry-card:last-child {
+  border-bottom: none;
+}
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  cursor: pointer;
+  gap: 10px;
+  transition: background var(--gm-transition-fast);
+}
+
+.entry-header:hover {
+  background: var(--gm-bg-hover);
+}
+
+.entry-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  flex: 1;
+}
+
+.entry-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.entry-date {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--gm-text-primary);
+}
+
+.entry-mileage {
+  font-size: 0.82rem;
+  color: var(--gm-text-muted);
+}
+
+.entry-toggle {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+  white-space: nowrap;
+  transition: color var(--gm-transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Use Bootstrap icon for toggle */
+.entry-toggle i {
+  font-size: 0.7rem;
+  transition: transform var(--gm-transition-fast);
+}
+
+.entry-card.expanded .entry-toggle i {
+  transform: rotate(180deg);
+}
+
+.entry-body {
+  display: none;
+  padding: 0 14px 14px;
+}
+
+.entry-card.expanded .entry-body {
+  display: block;
+}
+
+.entry-body-inner {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: var(--gm-radius);
+  border: 1px solid var(--gm-border-subtle);
+  background: var(--gm-bg-subtle);
+}
+
+.entry-tagline {
+  font-size: 0.8rem;
+  color: var(--gm-text-muted);
+  margin-bottom: 8px;
+}
+
+.entry-body-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.entry-body-notes {
+  margin-top: 8px;
+}
+
+.entry-body-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* Entry View Mode */
+.entry-view-mode { display: block; }
+.entry-edit-mode { display: none; }
+
+.entry-view-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.entry-view-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.entry-view-field label {
+  font-size: 0.82rem;
+  color: var(--gm-text-muted);
+}
+
+.entry-view-value {
+  font-size: 0.9rem;
+  color: var(--gm-text-primary);
+  padding: 10px 12px;
+  background: var(--gm-bg-subtle);
+  border-radius: var(--gm-radius);
+  border: 1px solid var(--gm-border-subtle);
+  word-wrap: break-word;
+}
+
+/* ============================================
+   SERVICE BADGES - Issues #6, #7, #8
+   ============================================ */
+.entry-services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  align-items: center;
+}
+
+/* ISSUE #8: Hide badges when entry is expanded */
+.entry-card.expanded .entry-services {
+  display: none;
+}
+
+/* ISSUE #7: All service badges look the same - no "main" distinction */
+.entry-service-tag,
+.entry-service-tag.main,
+.service-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--gm-accent-subtle);
+  color: var(--gm-accent-text);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid var(--gm-accent-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ISSUE #6: "+X more" badge styling */
+.entry-service-more,
+.service-badge-more {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  background: var(--gm-bg-elevated);
+  color: var(--gm-text-muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+  border: 1px solid var(--gm-border);
+  cursor: default;
+}
+
+/* Services display in expanded view */
+.entry-services-expanded {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.entry-services-expanded .entry-service-tag {
+  max-width: none;
+}
+
+/* ============================================
+   EXPANDED ENTRY STYLING
+   ============================================ */
+.entry-card.expanded {
+  background: var(--gm-bg-card-hover);
+}
+
+.entry-card.expanded .entry-header {
+  border-bottom: 1px solid var(--gm-border-subtle);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .entry-body-fields,
+  .entry-view-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .entry-service-tag {
+    max-width: 100px;
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+}

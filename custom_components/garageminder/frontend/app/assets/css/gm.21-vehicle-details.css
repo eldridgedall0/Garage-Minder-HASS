@@ -1,0 +1,386 @@
+/**
+ * Vehicle Details & Photo Styles
+ * Theme-aware version using CSS custom properties
+ */
+
+/* ============================================
+   VEHICLE THUMBNAIL STYLES
+   ============================================ */
+
+.vehicle-thumbnail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gm-bg-subtle);
+  border-radius: var(--gm-radius-md);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.vehicle-thumbnail-small {
+  width: 48px;
+  height: 36px;
+}
+
+.vehicle-thumbnail-medium {
+  width: 80px;
+  height: 60px;
+}
+
+.vehicle-thumbnail-large {
+  width: 160px;
+  height: 120px;
+}
+
+.vehicle-thumbnail img.vehicle-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vehicle-silhouette {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  color: var(--gm-text-muted);
+  opacity: 0.6;
+}
+
+.vehicle-silhouette svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* ============================================
+   VEHICLE PHOTO EDITOR
+   ============================================ */
+
+.vehicle-photo-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--gm-bg-subtle);
+  border-radius: var(--gm-radius-lg);
+  margin-bottom: 16px;
+}
+
+.photo-preview-container {
+  position: relative;
+  cursor: pointer;
+  border-radius: var(--gm-radius-md);
+  overflow: hidden;
+  border: 2px dashed var(--gm-border);
+  transition: border-color var(--gm-transition);
+}
+
+.photo-preview-container:hover {
+  border-color: var(--gm-accent);
+}
+
+.photo-preview-container .vehicle-thumbnail-large {
+  border-radius: 0;
+}
+
+.photo-upload-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--gm-bg-modal-overlay);
+  color: white;
+  opacity: 0;
+  transition: opacity var(--gm-transition);
+  font-size: 0.85rem;
+  gap: 4px;
+}
+
+.photo-preview-container:hover .photo-upload-overlay {
+  opacity: 1;
+}
+
+/* Show overlay by default when no photo */
+.photo-preview-container:not(:has(img)) .photo-upload-overlay {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.1);
+  color: var(--gm-text-muted);
+}
+
+.upload-icon {
+  font-size: 1.5rem;
+}
+
+.photo-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.vehicle-photo-editor.uploading .photo-preview-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gm-bg-modal-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vehicle-photo-editor.uploading .photo-preview-container::before {
+  content: "Uploading...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-size: 0.9rem;
+  color: var(--gm-text-primary);
+}
+
+/* ============================================
+   VEHICLE SETTINGS CARD UPDATES
+   ============================================ */
+
+.settings-vehicle-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.settings-vehicle-header-thumb {
+  flex-shrink: 0;
+}
+
+.settings-vehicle-summary {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-vehicle-meta .vehicle-info {
+  font-weight: 500;
+  color: var(--gm-text-primary);
+}
+
+/* ============================================
+   VIN DECODE FIELD
+   ============================================ */
+
+.vin-field-container {
+  grid-column: span 2;
+}
+
+.vin-input-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.vin-input-row input {
+  flex: 1;
+  text-transform: uppercase;
+  font-family: var(--gm-font-mono);
+  letter-spacing: 0.5px;
+}
+
+.vin-decode-btn {
+  white-space: nowrap;
+  padding: 8px 12px !important;
+}
+
+.vin-decode-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* ============================================
+   VEHICLE DETAILS SECTION
+   ============================================ */
+
+.settings-vehicle-details-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--gm-border);
+}
+
+.settings-section-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gm-text-primary);
+  margin-bottom: 12px;
+}
+
+.settings-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.find-image-row {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.find-image-btn {
+  font-size: 0.85rem;
+}
+
+/* Field update highlight animation */
+.field-updated input {
+  animation: fieldHighlight 2s ease-out;
+}
+
+@keyframes fieldHighlight {
+  0% {
+    background-color: var(--gm-success-bg);
+    border-color: var(--gm-success);
+  }
+  100% {
+    background-color: var(--gm-bg-input);
+    border-color: var(--gm-border-input);
+  }
+}
+
+/* ============================================
+   VEHICLE HEALTH CARD WITH PHOTO
+   ============================================ */
+
+.vehicle-health-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.health-card-photo {
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  border-radius: var(--gm-radius-md) var(--gm-radius-md) 0 0;
+  background: var(--gm-bg-subtle);
+  margin: -16px -16px 12px -16px;
+  width: calc(100% + 32px);
+}
+
+.health-card-photo .vehicle-thumbnail {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.health-card-photo .vehicle-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.health-card-photo .vehicle-silhouette {
+  height: 100%;
+  padding: 20px;
+}
+
+.health-card-photo .vehicle-silhouette svg {
+  opacity: 0.4;
+}
+
+.vehicle-health-card .health-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.health-card-title-block {
+  flex: 1;
+  min-width: 0;
+}
+
+.health-card-vehicle-info {
+  font-size: 0.75rem;
+  color: var(--gm-text-muted);
+  margin-top: 2px;
+}
+
+.health-card-thumb {
+  flex-shrink: 0;
+}
+
+.health-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ============================================
+   VEHICLE PICKER WITH THUMBNAIL
+   ============================================ */
+
+.vehicle-picker-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================
+   DASHBOARD VEHICLE DISPLAY
+   ============================================ */
+
+.dashboard-vehicle-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.dashboard-vehicle-photo {
+  flex-shrink: 0;
+}
+
+.dashboard-vehicle-info {
+  flex: 1;
+}
+
+.dashboard-vehicle-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: var(--gm-text-primary);
+}
+
+.dashboard-vehicle-details {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 600px) {
+  .settings-details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .vin-field-container {
+    grid-column: span 1;
+  }
+  
+  .vin-input-row {
+    flex-direction: column;
+  }
+  
+  .vin-decode-btn {
+    width: 100%;
+  }
+  
+  .vehicle-thumbnail-large {
+    width: 120px;
+    height: 90px;
+  }
+  
+  .vehicle-photo-editor {
+    padding: 12px;
+  }
+}

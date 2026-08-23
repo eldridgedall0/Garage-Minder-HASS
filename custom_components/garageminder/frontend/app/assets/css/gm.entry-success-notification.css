@@ -1,0 +1,149 @@
+/**
+ * GarageMinder - Entry Success Notification Styles
+ * Smart notification after saving entries with reminder info
+ */
+
+/* Custom notification container */
+.custom-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  max-width: 400px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10000;
+  cursor: pointer;
+}
+
+.custom-notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Entry success notification */
+.entry-success-notification {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.entry-success-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: var(--gm-text-primary);
+}
+
+.entry-success-reminders {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--gm-bg-subtle);
+  border-radius: 6px;
+  border-left: 3px solid var(--gm-success);
+}
+
+.entry-success-reminder-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 0.85rem;
+}
+
+.reminder-service-name {
+  font-weight: 500;
+  color: var(--gm-text-primary);
+}
+
+.reminder-next-info {
+  font-size: 0.8rem;
+  color: var(--gm-text-muted);
+}
+
+.entry-success-no-reminders {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--gm-warning-bg);
+  border-radius: 6px;
+  border-left: 3px solid var(--gm-warning);
+}
+
+.no-reminder-label {
+  font-size: 0.8rem;
+  color: var(--gm-warning-text);
+  font-weight: 500;
+}
+
+.btn-create-reminder {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-start;
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-create-reminder:hover {
+  background: var(--gm-bg-hover);
+  transform: translateX(2px);
+}
+
+.btn-create-reminder i {
+  font-size: 0.9rem;
+}
+
+/* Highlight form animation */
+@keyframes highlightForm {
+  0%, 100% {
+    background: transparent;
+  }
+  50% {
+    background: var(--gm-warning-bg);
+  }
+}
+
+.highlight-form {
+  animation: highlightForm 2s ease;
+  border-radius: var(--gm-radius);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .custom-notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+  
+  .entry-success-header {
+    font-size: 0.9rem;
+  }
+  
+  .entry-success-reminder-item {
+    font-size: 0.8rem;
+  }
+  
+  .btn-create-reminder {
+    font-size: 0.8rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .custom-notification {
+    background: var(--gm-bg-elevated);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  }
+}

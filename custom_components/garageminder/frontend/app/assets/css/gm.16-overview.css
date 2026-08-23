@@ -1,0 +1,702 @@
+/**
+ * Garage Maintenance - Overview/Fleet Dashboard Styles
+ * Theme-aware version using CSS custom properties
+ */
+
+/* ============================================
+   OVERVIEW SECTION
+   ============================================ */
+.overview-section {
+  margin-bottom: 24px;
+}
+
+.overview-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gm-text-primary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.overview-section-title .icon {
+  font-size: 1.2rem;
+}
+
+/* ============================================
+   OVERVIEW STATS CARDS (Top Summary)
+   ============================================ */
+.overview-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.overview-stat-card {
+  background: var(--gm-gradient-card-highlight);
+  border-radius: var(--gm-radius);
+  border: 1px solid var(--gm-border);
+  padding: 20px;
+  text-align: center;
+  transition: all var(--gm-transition);
+}
+
+.overview-stat-card:hover {
+  border-color: var(--gm-accent-soft);
+  transform: translateY(-2px);
+}
+
+.overview-stat-card.stat-overdue {
+  background: linear-gradient(135deg, var(--gm-error-bg), var(--gm-bg-card) 50%);
+  border-color: var(--gm-error);
+}
+
+.overview-stat-card.stat-overdue .stat-value {
+  color: var(--gm-error-text);
+}
+
+.overview-stat-card.stat-upcoming {
+  background: linear-gradient(135deg, var(--gm-warning-bg), var(--gm-bg-card) 50%);
+  border-color: var(--gm-warning);
+}
+
+.overview-stat-card.stat-upcoming .stat-value {
+  color: var(--gm-warning-text);
+}
+
+.overview-stat-card.stat-ok {
+  background: linear-gradient(135deg, var(--gm-success-bg), var(--gm-bg-card) 50%);
+  border-color: var(--gm-success);
+}
+
+.overview-stat-card.stat-ok .stat-value {
+  color: var(--gm-success-text);
+}
+
+.stat-icon {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gm-text-primary);
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+  margin-top: 4px;
+}
+
+/* ============================================
+   VEHICLE HEALTH CARDS GRID - FLUID LAYOUT
+   ============================================ */
+.health-cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.vehicle-health-card {
+  flex: 1 1 300px;
+  max-width: 100%;
+  background: var(--gm-bg-card);
+  border-radius: var(--gm-radius-lg);
+  border: 1px solid var(--gm-border);
+  padding: 20px;
+  cursor: pointer;
+  transition: all var(--gm-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 1 card: full width */
+.vehicle-health-card:only-child {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+
+/* 2 cards: each ~50% */
+.vehicle-health-card:first-child:nth-last-child(2),
+.vehicle-health-card:first-child:nth-last-child(2) ~ .vehicle-health-card {
+  flex: 1 1 calc(50% - 10px);
+  max-width: calc(50% - 10px);
+}
+
+/* 3 cards: each ~33% */
+.vehicle-health-card:first-child:nth-last-child(3),
+.vehicle-health-card:first-child:nth-last-child(3) ~ .vehicle-health-card {
+  flex: 1 1 calc(33.333% - 14px);
+  max-width: calc(33.333% - 14px);
+}
+
+.vehicle-health-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gm-gradient-accent);
+  opacity: 0;
+  transition: opacity var(--gm-transition);
+}
+
+.vehicle-health-card:hover {
+  border-color: var(--gm-accent-soft);
+  transform: translateY(-3px);
+  box-shadow: var(--gm-shadow-lg);
+}
+
+.vehicle-health-card:hover::before {
+  opacity: 1;
+}
+
+.vehicle-health-card.status-overdue {
+  border-color: var(--gm-error);
+}
+
+.vehicle-health-card.status-overdue::before {
+  background: linear-gradient(90deg, var(--gm-error), var(--gm-btn-danger-bg-hover));
+  opacity: 1;
+}
+
+.vehicle-health-card.status-upcoming {
+  border-color: var(--gm-warning);
+}
+
+.vehicle-health-card.status-upcoming::before {
+  background: linear-gradient(90deg, var(--gm-warning), var(--gm-warning));
+  opacity: 1;
+}
+
+.vehicle-health-card.status-ok {
+  border-color: var(--gm-success);
+}
+
+.vehicle-health-card.status-ok::before {
+  background: linear-gradient(90deg, var(--gm-success), var(--gm-success));
+  opacity: 1;
+}
+
+/* Health Card Header */
+.health-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.health-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gm-text-primary);
+  margin: 0;
+}
+
+.health-card-meta {
+  font-size: 0.8rem;
+  color: var(--gm-text-muted);
+  margin-top: 4px;
+}
+
+.health-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--gm-radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.health-status-badge.status-ok {
+  background: var(--gm-success-bg);
+  color: var(--gm-success-text);
+  border: 1px solid var(--gm-success);
+}
+
+.health-status-badge.status-upcoming {
+  background: var(--gm-warning-bg);
+  color: var(--gm-warning-text);
+  border: 1px solid var(--gm-warning);
+}
+
+.health-status-badge.status-overdue {
+  background: var(--gm-error-bg);
+  color: var(--gm-error-text);
+  border: 1px solid var(--gm-error);
+}
+
+.health-status-badge .status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.health-status-badge.status-ok .status-dot {
+  background: var(--gm-success);
+}
+
+.health-status-badge.status-upcoming .status-dot {
+  background: var(--gm-warning);
+}
+
+.health-status-badge.status-overdue .status-dot {
+  background: var(--gm-error);
+}
+
+/* Health Card Stats */
+.health-card-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.health-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.health-stat-label {
+  font-size: 0.75rem;
+  color: var(--gm-text-muted);
+}
+
+.health-stat-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gm-text-primary);
+}
+
+.health-stat-value.overdue {
+  color: var(--gm-error-text);
+}
+
+.health-stat-value.upcoming {
+  color: var(--gm-warning-text);
+}
+
+/* Health Card Renewals */
+.health-renewals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gm-border);
+}
+
+.renewal-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  background: var(--gm-bg-subtle);
+  border-radius: 8px;
+  border: 1px solid var(--gm-border);
+}
+
+.renewal-item .renewal-icon {
+  font-size: 1rem;
+}
+
+.renewal-item .renewal-label {
+  color: var(--gm-text-muted);
+}
+
+.renewal-item .renewal-value {
+  font-weight: 600;
+  color: var(--gm-text-primary);
+}
+
+.renewal-item.status-ok .renewal-value {
+  color: var(--gm-success-text);
+}
+
+.renewal-item.status-upcoming .renewal-value {
+  color: var(--gm-warning-text);
+}
+
+.renewal-item.status-overdue .renewal-value {
+  color: var(--gm-error-text);
+}
+
+.renewal-item.status-notset .renewal-value {
+  color: var(--gm-text-muted);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Health Card Footer */
+.health-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gm-border);
+}
+
+.health-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--gm-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all var(--gm-transition-fast);
+}
+
+.health-card-action:hover {
+  background: var(--gm-accent-subtle);
+}
+
+/* ============================================
+   SPENDING BREAKDOWN SECTION
+   ============================================ */
+.spending-breakdown {
+  background: var(--gm-bg-card);
+  border-radius: var(--gm-radius-lg);
+  border: 1px solid var(--gm-border);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.spending-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.spending-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gm-text-primary);
+  margin: 0;
+}
+
+.spending-totals {
+  display: flex;
+  gap: 20px;
+}
+
+.spending-total-item {
+  text-align: right;
+}
+
+.spending-total-label {
+  font-size: 0.75rem;
+  color: var(--gm-text-muted);
+}
+
+.spending-total-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gm-text-primary);
+}
+
+.spending-total-value.highlight {
+  color: var(--gm-accent);
+}
+
+/* Spending Categories */
+.spending-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.spending-category {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+}
+
+.spending-category-name {
+  font-size: 0.85rem;
+  color: var(--gm-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spending-category-bar {
+  width: 200px;
+  height: 8px;
+  background: var(--gm-bg-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.spending-category-bar-fill {
+  height: 100%;
+  background: var(--gm-gradient-accent);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.spending-category-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gm-text-primary);
+  min-width: 80px;
+  text-align: right;
+}
+
+/* ============================================
+   RECENT ACTIVITY LIST
+   ============================================ */
+.recent-activity {
+  background: var(--gm-bg-card);
+  border-radius: var(--gm-radius-lg);
+  border: 1px solid var(--gm-border);
+  overflow: hidden;
+}
+
+.recent-activity-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gm-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.recent-activity-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gm-text-primary);
+  margin: 0;
+}
+
+.recent-activity-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.recent-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--gm-border-subtle);
+  transition: background var(--gm-transition-fast);
+  cursor: pointer;
+}
+
+.recent-activity-item:last-child {
+  border-bottom: none;
+}
+
+.recent-activity-item:hover {
+  background: var(--gm-bg-hover);
+}
+
+.activity-date {
+  min-width: 90px;
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+}
+
+.activity-vehicle {
+  min-width: 140px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gm-accent);
+}
+
+.activity-services {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--gm-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-cost {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gm-text-primary);
+  min-width: 80px;
+  text-align: right;
+}
+
+.recent-activity-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--gm-text-muted);
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 1200px) {
+  .overview-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .spending-category-bar {
+    width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .overview-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .overview-stat-card {
+    padding: 16px;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  /* On tablet/mobile, stack cards vertically */
+  .health-cards-grid {
+    flex-direction: column;
+  }
+  
+  .vehicle-health-card,
+  .vehicle-health-card:only-child,
+  .vehicle-health-card:first-child:nth-last-child(2),
+  .vehicle-health-card:first-child:nth-last-child(2) ~ .vehicle-health-card,
+  .vehicle-health-card:first-child:nth-last-child(3),
+  .vehicle-health-card:first-child:nth-last-child(3) ~ .vehicle-health-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+  
+  .spending-category {
+    grid-template-columns: 1fr auto;
+  }
+  
+  .spending-category-bar {
+    display: none;
+  }
+  
+  .recent-activity-item {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .activity-date,
+  .activity-vehicle {
+    min-width: auto;
+  }
+  
+  .activity-services {
+    width: 100%;
+    order: 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .overview-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .health-renewals {
+    flex-direction: column;
+  }
+  
+  .renewal-item {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .spending-totals {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .spending-total-item {
+    text-align: left;
+  }
+}
+
+/* ============================================
+   SETTINGS RENEWALS SECTION
+   ============================================ */
+.settings-renewals-section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--gm-border-subtle);
+}
+
+.settings-renewals-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gm-text-muted);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-renewals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .settings-renewals-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   OVERVIEW PAGINATION
+   ============================================ */
+.overview-pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--gm-border);
+}
+
+.overview-pager .pager-info {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+  min-width: 100px;
+  text-align: center;
+}
+
+.overview-pager button {
+  min-width: 100px;
+}
+
+.overview-pager button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.section-page-info {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--gm-text-muted);
+  margin-left: 8px;
+}

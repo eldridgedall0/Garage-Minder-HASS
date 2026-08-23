@@ -1,0 +1,96 @@
+/**
+ * Garage Maintenance - Enhancements (expanded entry focus, dimming, etc.)
+ * Theme-aware version using CSS custom properties
+ * Note: uses :has() - supported on modern Chrome/Edge/Safari; degrades gracefully elsewhere.
+ */
+
+/* Enhanced focus for expanded entry cards */
+.entry-card {
+  transition: all var(--gm-transition);
+}
+
+.entry-card.expanded {
+  border: 1px solid var(--gm-accent-soft);
+  box-shadow: 
+    0 0 20px var(--gm-accent-muted),
+    0 8px 25px rgba(0, 0, 0, 0.3);
+  background: var(--gm-gradient-card-highlight);
+  position: relative;
+  z-index: 2;
+  border-radius: var(--gm-radius);
+  margin: 8px 4px;
+  padding: 0 4px;
+}
+
+/* Dim non-expanded entries when one is expanded */
+.entry-list:has(.entry-card.expanded) .entry-card:not(.expanded) {
+  opacity: 0.6;
+}
+
+.entry-list:has(.entry-card.expanded) .entry-card:not(.expanded):hover {
+  opacity: 0.85;
+}
+
+/* Accent bar on left side of expanded card */
+.entry-card.expanded::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background: var(--gm-gradient-accent);
+  border-radius: 3px;
+}
+
+/* Enhanced header styling when expanded */
+.entry-card.expanded .entry-header {
+  background: var(--gm-accent-muted);
+  border-radius: var(--gm-radius) var(--gm-radius) 0 0;
+}
+
+.entry-card.expanded .entry-toggle {
+  color: var(--gm-accent);
+}
+
+/* Same enhancements for reminder cards */
+.reminder-card {
+  transition: all var(--gm-transition);
+}
+
+.reminder-card.expanded {
+  border: 1px solid var(--gm-accent-soft);
+  box-shadow: 
+    0 0 20px var(--gm-accent-muted),
+    0 8px 25px rgba(0, 0, 0, 0.3);
+  background: var(--gm-gradient-card-highlight);
+  position: relative;
+  z-index: 2;
+  border-radius: var(--gm-radius);
+  margin: 8px 4px;
+  padding: 0 4px;
+}
+
+.reminders-list:has(.reminder-card.expanded) .reminder-card:not(.expanded) {
+  opacity: 0.6;
+}
+
+.reminders-list:has(.reminder-card.expanded) .reminder-card:not(.expanded):hover {
+  opacity: 0.85;
+}
+
+.reminder-card.expanded::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background: var(--gm-gradient-accent);
+  border-radius: 3px;
+}
+
+.reminder-card.expanded .reminder-header {
+  background: var(--gm-accent-muted);
+  border-radius: var(--gm-radius) var(--gm-radius) 0 0;
+}

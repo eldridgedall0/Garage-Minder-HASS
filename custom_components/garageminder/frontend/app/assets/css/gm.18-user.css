@@ -1,0 +1,362 @@
+/**
+ * GarageMinder - User Menu Styles
+ * 
+ * Updated: Added fleet tier badge styling and dynamic level name support
+ * 
+ * FIXES:
+ * - Issue #11: Remove underline on hover for dropdown links
+ * - Issue #XX: Badge should show actual membership level name from WordPress
+ */
+
+/* ============================================
+   USER MENU CONTAINER (inside nav)
+   ============================================ */
+.user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+/* Divider line before user menu */
+.user-menu::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 24px;
+  width: 1px;
+  background: var(--gm-border-light);
+}
+
+/* ============================================
+   TRIGGER BUTTON (styled as nav button)
+   ============================================ */
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 16px;
+  border-radius: var(--gm-radius-full);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--gm-transition);
+  user-select: none;
+  color: var(--gm-text-muted);
+  font-size: 0.85rem;
+}
+
+.user-menu-trigger:hover {
+  color: var(--gm-text-primary);
+  background: var(--gm-bg-hover);
+}
+
+.user-menu.open .user-menu-trigger {
+  background: var(--gm-bg-hover);
+  color: var(--gm-text-primary);
+}
+
+/* ============================================
+   AVATAR
+   ============================================ */
+.user-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gm-gradient-accent);
+  color: var(--gm-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px var(--gm-accent-soft);
+}
+
+/* ============================================
+   USER NAME
+   ============================================ */
+.user-name {
+  font-size: 0.85rem;
+  color: inherit;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================
+   DROPDOWN ARROW
+   ============================================ */
+.user-menu-arrow {
+  font-size: 0.6rem;
+  color: inherit;
+  opacity: 0.7;
+  transition: transform var(--gm-transition);
+  margin-left: 2px;
+}
+
+.user-menu.open .user-menu-arrow {
+  transform: rotate(180deg);
+}
+
+/* ============================================
+   SUBSCRIPTION BADGE
+   Updated: Now supports dynamic level names and fleet tier
+   ============================================ */
+.subscription-badge {
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Active subscription (Pro, Paid tiers) */
+.subscription-badge.active {
+  background: var(--gm-success-bg);
+  color: var(--gm-success-text);
+}
+
+/* Free tier */
+.subscription-badge.inactive {
+  background: var(--gm-warning-bg);
+  color: var(--gm-warning-text);
+}
+
+/* Fleet tier - special premium styling */
+.subscription-badge.active.fleet {
+  background: linear-gradient(135deg, var(--gm-accent-primary) 0%, var(--gm-accent-secondary) 100%);
+  color: var(--gm-text-inverse);
+  box-shadow: 0 2px 6px var(--gm-accent-soft);
+}
+
+/* ============================================
+   DROPDOWN MENU
+   ============================================ */
+.user-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  min-width: 240px;
+  background: var(--gm-bg-card);
+  border-radius: var(--gm-radius);
+  border: 1px solid var(--gm-border);
+  box-shadow: var(--gm-shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.96);
+  transition: all var(--gm-transition);
+  z-index: var(--gm-z-dropdown);
+  overflow: hidden;
+}
+
+.user-menu.open .user-menu-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* ============================================
+   DROPDOWN HEADER
+   ============================================ */
+.user-menu-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--gm-border);
+  background: var(--gm-bg-subtle);
+}
+
+.user-email {
+  font-size: 0.8rem;
+  color: var(--gm-text-primary);
+  word-break: break-all;
+  font-weight: 500;
+}
+
+.user-subscription-status {
+  font-size: 0.7rem;
+  color: var(--gm-success-text);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.user-subscription-status.free {
+  color: var(--gm-warning-text);
+}
+
+/* Fleet tier status styling */
+.user-subscription-status.fleet {
+  color: var(--gm-accent-primary);
+  font-weight: 600;
+}
+
+/* ============================================
+   DROPDOWN DIVIDER
+   ============================================ */
+.user-menu-divider {
+  height: 1px;
+  background: var(--gm-border);
+  margin: 4px 0;
+}
+
+/* ============================================
+   DROPDOWN ITEMS - Issue #11 FIX
+   ============================================ */
+.user-menu-items {
+  padding: 6px 0;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  color: var(--gm-text-primary);
+  text-decoration: none !important; /* Issue #11: Never underline */
+  transition: background var(--gm-transition-fast);
+}
+
+/* Issue #11: Ensure no underline on hover */
+.user-menu-item:hover {
+  background: var(--gm-bg-hover);
+  text-decoration: none !important;
+}
+
+.user-menu-item:focus {
+  text-decoration: none !important;
+}
+
+.user-menu-item:visited {
+  text-decoration: none !important;
+}
+
+.user-menu-upgrade {
+  color: var(--gm-warning-text);
+}
+
+.user-menu-upgrade:hover {
+  background: var(--gm-warning-bg);
+  text-decoration: none !important;
+}
+
+.user-menu-logout {
+  color: var(--gm-error-text);
+}
+
+.user-menu-logout:hover {
+  background: var(--gm-error-bg);
+  text-decoration: none !important;
+}
+
+/* ============================================
+   LOGIN BUTTON (when not logged in)
+   ============================================ */
+.user-menu-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gm-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--gm-radius-full);
+  text-decoration: none !important;
+  transition: all var(--gm-transition);
+  margin-left: 4px;
+}
+
+.user-menu-login-btn:hover {
+  color: var(--gm-text-primary);
+  background: var(--gm-bg-hover);
+  text-decoration: none !important;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Tablet: Hide user name, show avatar + badge */
+@media (max-width: 900px) {
+  .user-name {
+    display: none;
+  }
+  
+  .user-menu-trigger {
+    padding: 6px 10px 6px 14px;
+  }
+  
+  .subscription-badge {
+    max-width: 80px;
+  }
+}
+
+/* Mobile: Compact avatar-only mode */
+@media (max-width: 650px) {
+  .user-menu::before {
+    height: 20px;
+  }
+  
+  .user-menu-trigger {
+    padding: 6px 8px 6px 12px;
+    gap: 6px;
+  }
+  
+  .user-avatar {
+    width: 24px;
+    height: 24px;
+    font-size: 0.65rem;
+  }
+  
+  .subscription-badge {
+    display: none;
+  }
+  
+  .user-menu-arrow {
+    font-size: 0.55rem;
+  }
+  
+  .user-menu-dropdown {
+    right: -8px;
+    min-width: 220px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 400px) {
+  .user-menu-trigger {
+    padding: 4px 6px 4px 10px;
+  }
+  
+  .user-avatar {
+    width: 22px;
+    height: 22px;
+    font-size: 0.6rem;
+  }
+  
+  .user-menu-arrow {
+    display: none;
+  }
+  
+  .user-menu-dropdown {
+    right: -12px;
+    min-width: 200px;
+  }
+  
+  .user-menu-item {
+    padding: 10px 14px;
+    font-size: 0.8rem;
+  }
+}

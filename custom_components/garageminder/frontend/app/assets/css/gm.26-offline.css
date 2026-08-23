@@ -1,0 +1,195 @@
+/**
+ * GarageMinder — Offline Sync UI Styles
+ * gm.26-offline.css
+ *
+ * Covers: offline/sync banner, locked controls, pending queue badge,
+ * update-available prompt, and offline mode indicators.
+ */
+
+/* ── Offline Status Banner ─────────────────────────────────────────────── */
+
+#gm-offline-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transform: translateY(100%);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+  pointer-events: none;
+}
+
+#gm-offline-banner.gm-offline-banner--visible {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Type variants */
+#gm-offline-banner.gm-offline-banner--offline {
+  background-color: var(--surface-2, #1e293b);
+  color: var(--text-muted, #94a3b8);
+  border-top: 1px solid var(--border, #334155);
+}
+
+#gm-offline-banner.gm-offline-banner--syncing {
+  background-color: var(--surface-2, #1e293b);
+  color: var(--info, #38bdf8);
+  border-top: 1px solid var(--info, #38bdf8);
+}
+
+#gm-offline-banner.gm-offline-banner--success {
+  background-color: var(--surface-2, #1e293b);
+  color: var(--success, #4ade80);
+  border-top: 1px solid var(--success, #4ade80);
+}
+
+#gm-offline-banner.gm-offline-banner--error {
+  background-color: var(--surface-2, #1e293b);
+  color: var(--danger, #f87171);
+  border-top: 1px solid var(--danger, #f87171);
+}
+
+#gm-offline-banner.gm-offline-banner--update {
+  background-color: var(--primary, #3b82f6);
+  color: #fff;
+  border-top: none;
+}
+
+.gm-offline-icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.gm-offline-msg {
+  flex: 1;
+}
+
+/* Action button (e.g. "Refresh now") */
+.gm-offline-action {
+  flex-shrink: 0;
+  padding: 0.3rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.15);
+  color: inherit;
+  transition: background 0.15s ease;
+}
+
+.gm-offline-action:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Dismiss button */
+.gm-offline-dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 1rem;
+  padding: 0 0.25rem;
+  line-height: 1;
+}
+
+.gm-offline-dismiss:hover {
+  opacity: 1;
+}
+
+/* ── Sync Spinner ──────────────────────────────────────────────────────── */
+
+.gm-offline-spinner {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: gm-spin 0.6s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes gm-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Offline-locked Controls ───────────────────────────────────────────── */
+
+/* Applied to edit/delete buttons when offline */
+.gm-offline-locked {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  position: relative;
+}
+
+/* Visual lock indicator on locked buttons */
+.gm-offline-locked::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(0,0,0,0.1);
+}
+
+/* Offline mode indicator on Add buttons (still allowed, will queue) */
+.gm-offline-mode {
+  border-style: dashed !important;
+  opacity: 0.85;
+}
+
+.gm-offline-mode::after {
+  content: ' (offline)';
+  font-size: 0.75em;
+  opacity: 0.7;
+}
+
+/* ── Pending Queue Badge ───────────────────────────────────────────────── */
+
+#gm-queue-badge {
+  display: inline-block;
+  background: var(--warning, #f59e0b);
+  color: #000;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 10px;
+  vertical-align: middle;
+  margin-left: 4px;
+  line-height: 1.4;
+}
+
+/* ── Light theme overrides ─────────────────────────────────────────────── */
+
+body.gm-theme-light #gm-offline-banner.gm-offline-banner--offline,
+body.gm-theme-light #gm-offline-banner.gm-offline-banner--syncing,
+body.gm-theme-light #gm-offline-banner.gm-offline-banner--success,
+body.gm-theme-light #gm-offline-banner.gm-offline-banner--error {
+  background-color: var(--surface-2, #f1f5f9);
+  border-top-color: var(--border, #cbd5e1);
+}
+
+body.gm-theme-light #gm-offline-banner.gm-offline-banner--offline {
+  color: var(--text-muted, #64748b);
+}
+
+/* ── Responsive: full-width on mobile, narrower on desktop ────────────── */
+
+@media (min-width: 768px) {
+  #gm-offline-banner {
+    font-size: 0.85rem;
+    padding: 0.55rem 1.5rem;
+  }
+}

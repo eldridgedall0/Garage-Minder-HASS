@@ -1,0 +1,406 @@
+/**
+ * GarageMinder Design Tokens
+ * 
+ * Theme-aware CSS custom properties
+ * Dark theme is default, light theme applied via .gm-theme-light class on body
+ * 
+ * FIXES:
+ * - Issue #1: Light theme body background now uses solid color instead of dark gradient
+ */
+
+/* ========================================
+   DARK THEME (Default)
+   ======================================== */
+:root,
+.gm-theme-dark {
+  /* Primary backgrounds */
+  --gm-bg-body: #0b1120;
+  --gm-bg-card: #151d2e;
+  --gm-bg-card-hover: #1a2438;
+  --gm-bg-input: #1a2438;
+  --gm-bg-input-focus: #1e293b;
+  --gm-bg-header: #0f172a;
+  --gm-bg-footer: #0b1120;
+  
+  /* Body gradient for dark theme ONLY */
+  --gm-bg-body-gradient: radial-gradient(circle at center top, rgb(31, 41, 55), rgb(2, 6, 23) 55%);
+  
+  /* Secondary/elevated backgrounds */
+  --gm-bg-elevated: #1e293b;
+  --gm-bg-modal: #151d2e;
+  --gm-bg-modal-overlay: rgba(0, 0, 0, 0.7);
+  --gm-bg-dropdown: #1a2438;
+  --gm-bg-tooltip: #334155;
+  --gm-bg-subtle: rgba(15, 23, 42, 0.5);
+  --gm-bg-hover: #334155;
+  
+  /* Text colors */
+  --gm-text-primary: #ffffff;
+  --gm-text-secondary: #94a3b8;
+  --gm-text-muted: #64748b;
+  --gm-text-disabled: #475569;
+  --gm-text-inverse: #0f172a;
+  --gm-text-link: #38bdf8;
+  --gm-text-link-hover: #7dd3fc;
+  
+  /* Accent/brand colors */
+  --gm-accent: #38bdf8;
+  --gm-accent-hover: #0ea5e9;
+  --gm-accent-active: #0284c7;
+  --gm-accent-muted: rgba(56, 189, 248, 0.15);
+  --gm-accent-soft: rgba(56, 189, 248, 0.2);
+  --gm-accent-subtle: rgba(56, 189, 248, 0.12);
+  --gm-accent-text: #7dd3fc;
+  
+  /* Border colors */
+  --gm-border: #334155;
+  --gm-border-light: #1e293b;
+  --gm-border-focus: #38bdf8;
+  --gm-border-input: #475569;
+  --gm-border-subtle: rgba(55, 65, 81, 0.6);
+  --gm-border-default: #475569;
+  
+  /* Status colors */
+  --gm-success: #22c55e;
+  --gm-success-bg: rgba(34, 197, 94, 0.15);
+  --gm-success-text: #86efac;
+  
+  --gm-warning: #f59e0b;
+  --gm-warning-bg: rgba(245, 158, 11, 0.15);
+  --gm-warning-text: #fcd34d;
+  
+  --gm-error: #ef4444;
+  --gm-error-bg: rgba(239, 68, 68, 0.15);
+  --gm-error-text: #fca5a5;
+  --gm-danger: #ef4444;
+  
+  --gm-info: #3b82f6;
+  --gm-info-bg: rgba(59, 130, 246, 0.15);
+  --gm-info-text: #93c5fd;
+  
+  /* Pill/badge status colors */
+  --gm-pill-dot-default: #38bdf8;
+  --gm-pill-dot-warn: #f59e0b;
+  --gm-pill-dot-bad: #ef4444;
+  --gm-pill-dot-good: #22c55e;
+  
+  /* Button colors */
+  --gm-btn-primary-bg: #0ea5e9;
+  --gm-btn-primary-bg-hover: #0284c7;
+  --gm-btn-primary-text: #ffffff;
+  
+  --gm-btn-secondary-bg: #334155;
+  --gm-btn-secondary-bg-hover: #475569;
+  --gm-btn-secondary-text: #f1f5f9;
+  
+  --gm-btn-ghost-bg: transparent;
+  --gm-btn-ghost-bg-hover: rgba(255, 255, 255, 0.1);
+  --gm-btn-ghost-text: #94a3b8;
+  --gm-btn-ghost-text-hover: #f1f5f9;
+  --gm-btn-ghost-border: #475569;
+  
+  --gm-btn-danger-bg: #dc2626;
+  --gm-btn-danger-bg-hover: #b91c1c;
+  --gm-btn-danger-text: #ffffff;
+  
+  /* Scrollbar */
+  --gm-scrollbar-track: #1e293b;
+  --gm-scrollbar-thumb: #475569;
+  --gm-scrollbar-thumb-hover: #64748b;
+  
+  /* Shadows */
+  --gm-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --gm-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --gm-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --gm-shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+  
+  /* Entry/History specific */
+  --gm-entry-bg: #1a2438;
+  --gm-entry-bg-hover: #1e293b;
+  --gm-entry-border: #334155;
+  --gm-entry-date-bg: #0f172a;
+  
+  /* Table/list alternating rows */
+  --gm-row-even: #151d2e;
+  --gm-row-odd: #1a2438;
+  --gm-row-hover: #1e293b;
+  
+  /* Selection */
+  --gm-selection-bg: rgba(56, 189, 248, 0.3);
+  --gm-selection-text: #ffffff;
+  
+  /* Focus ring */
+  --gm-focus-ring: 0 0 0 2px rgba(56, 189, 248, 0.5);
+  
+  /* Gradients for dark mode */
+  --gm-gradient-accent: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  --gm-gradient-card-highlight: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(15, 23, 42, 0.98) 50%);
+  
+  /* Mobile nav drawer */
+  --gm-drawer-bg: #0f172a;
+  --gm-drawer-border: rgba(148, 163, 184, 0.15);
+  
+  /* ===========================================
+     BACKWARD COMPATIBILITY ALIASES (Dark Mode)
+     =========================================== */
+  --border: var(--gm-border);
+  --border-light: var(--gm-border-light);
+  --border-subtle: var(--gm-border-subtle);
+  --border-default: var(--gm-border-default);
+  --border-color: var(--gm-border);
+  
+  --bg-elevated: var(--gm-bg-elevated);
+  --bg-card: var(--gm-bg-card);
+  --bg-hover: var(--gm-bg-hover);
+  --bg-subtle: var(--gm-bg-subtle);
+  --surface-alt: var(--gm-bg-elevated);
+  
+  --text-main: var(--gm-text-primary);
+  --text-muted: var(--gm-text-muted);
+  --text-primary: var(--gm-text-primary);
+  --text: var(--gm-text-primary);
+  
+  --accent: var(--gm-accent);
+  --accent-soft: var(--gm-accent-soft);
+  --accent-subtle: var(--gm-accent-subtle);
+  --accent-text: var(--gm-accent-text);
+  
+  --success: var(--gm-success);
+  --warning: var(--gm-warning);
+  --danger: var(--gm-danger);
+  
+  --radius: var(--gm-radius);
+  --radius-sm: var(--gm-radius-sm);
+  --radius-md: var(--gm-radius-md);
+  --radius-lg: var(--gm-radius-lg);
+  
+  --input-bg: var(--gm-bg-input);
+  --primary: var(--gm-accent);
+  --success-bg: var(--gm-success-bg);
+}
+
+/* ========================================
+   LIGHT THEME - ISSUE #1 FIX
+   ======================================== */
+.gm-theme-light {
+  /* Primary backgrounds - NO gradient for light theme */
+  --gm-bg-body: #f8fafc;
+  --gm-bg-body-gradient: none !important;
+  --gm-bg-card: #ffffff;
+  --gm-bg-card-hover: #f1f5f9;
+  --gm-bg-input: #ffffff;
+  --gm-bg-input-focus: #ffffff;
+  --gm-bg-header: #ffffff;
+  --gm-bg-footer: #f1f5f9;
+  
+  /* Secondary/elevated backgrounds */
+  --gm-bg-elevated: #ffffff;
+  --gm-bg-modal: #ffffff;
+  --gm-bg-modal-overlay: rgba(0, 0, 0, 0.5);
+  --gm-bg-dropdown: #ffffff;
+  --gm-bg-tooltip: #1e293b;
+  --gm-bg-subtle: #f1f5f9;
+  --gm-bg-hover: rgba(0, 0, 0, 0.05);
+  
+  /* Text colors */
+  --gm-text-primary: #1e293b;
+  --gm-text-secondary: #475569;
+  --gm-text-muted: #64748b;
+  --gm-text-disabled: #94a3b8;
+  --gm-text-inverse: #ffffff;
+  --gm-text-link: #0284c7;
+  --gm-text-link-hover: #0369a1;
+  
+  /* Accent/brand colors */
+  --gm-accent: #0284c7;
+  --gm-accent-hover: #0369a1;
+  --gm-accent-active: #075985;
+  --gm-accent-muted: rgba(2, 132, 199, 0.1);
+  --gm-accent-soft: rgba(2, 132, 199, 0.15);
+  --gm-accent-subtle: rgba(2, 132, 199, 0.1);
+  --gm-accent-text: #0369a1;
+  
+  /* Border colors */
+  --gm-border: #e2e8f0;
+  --gm-border-light: #f1f5f9;
+  --gm-border-focus: #0284c7;
+  --gm-border-input: #cbd5e1;
+  --gm-border-subtle: #e2e8f0;
+  --gm-border-default: #cbd5e1;
+  
+  /* Status colors */
+  --gm-success: #16a34a;
+  --gm-success-bg: rgba(22, 163, 74, 0.1);
+  --gm-success-text: #15803d;
+  
+  --gm-warning: #d97706;
+  --gm-warning-bg: rgba(217, 119, 6, 0.1);
+  --gm-warning-text: #b45309;
+  
+  --gm-error: #dc2626;
+  --gm-error-bg: rgba(220, 38, 38, 0.1);
+  --gm-error-text: #b91c1c;
+  --gm-danger: #dc2626;
+  
+  --gm-info: #2563eb;
+  --gm-info-bg: rgba(37, 99, 235, 0.1);
+  --gm-info-text: #1d4ed8;
+  
+  /* Pill/badge status colors */
+  --gm-pill-dot-default: #0284c7;
+  --gm-pill-dot-warn: #d97706;
+  --gm-pill-dot-bad: #dc2626;
+  --gm-pill-dot-good: #16a34a;
+  
+  /* Button colors */
+  --gm-btn-primary-bg: #0284c7;
+  --gm-btn-primary-bg-hover: #0369a1;
+  --gm-btn-primary-text: #ffffff;
+  
+  --gm-btn-secondary-bg: #e2e8f0;
+  --gm-btn-secondary-bg-hover: #cbd5e1;
+  --gm-btn-secondary-text: #1e293b;
+  
+  --gm-btn-ghost-bg: transparent;
+  --gm-btn-ghost-bg-hover: rgba(0, 0, 0, 0.05);
+  --gm-btn-ghost-text: #64748b;
+  --gm-btn-ghost-text-hover: #1e293b;
+  --gm-btn-ghost-border: #cbd5e1;
+  
+  --gm-btn-danger-bg: #dc2626;
+  --gm-btn-danger-bg-hover: #b91c1c;
+  --gm-btn-danger-text: #ffffff;
+  
+  /* Scrollbar */
+  --gm-scrollbar-track: #f1f5f9;
+  --gm-scrollbar-thumb: #cbd5e1;
+  --gm-scrollbar-thumb-hover: #94a3b8;
+  
+  /* Shadows */
+  --gm-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --gm-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --gm-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --gm-shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  
+  /* Entry/History specific */
+  --gm-entry-bg: #ffffff;
+  --gm-entry-bg-hover: #f8fafc;
+  --gm-entry-border: #e2e8f0;
+  --gm-entry-date-bg: #f1f5f9;
+  
+  /* Table/list alternating rows */
+  --gm-row-even: #ffffff;
+  --gm-row-odd: #f8fafc;
+  --gm-row-hover: #f1f5f9;
+  
+  /* Selection */
+  --gm-selection-bg: rgba(2, 132, 199, 0.2);
+  --gm-selection-text: #1e293b;
+  
+  /* Focus ring */
+  --gm-focus-ring: 0 0 0 2px rgba(2, 132, 199, 0.3);
+  
+  /* Gradients for light mode */
+  --gm-gradient-accent: linear-gradient(135deg, #0284c7, #0369a1);
+  --gm-gradient-card-highlight: linear-gradient(135deg, rgba(2, 132, 199, 0.05), #ffffff 50%);
+  
+  /* Mobile nav drawer */
+  --gm-drawer-bg: #ffffff;
+  --gm-drawer-border: #e2e8f0;
+  
+  /* ===========================================
+     BACKWARD COMPATIBILITY ALIASES (Light Mode)
+     =========================================== */
+  --border: var(--gm-border);
+  --border-light: var(--gm-border-light);
+  --border-subtle: var(--gm-border-subtle);
+  --border-default: var(--gm-border-default);
+  --border-color: var(--gm-border);
+  
+  --bg-elevated: var(--gm-bg-elevated);
+  --bg-card: var(--gm-bg-card);
+  --bg-hover: var(--gm-bg-hover);
+  --bg-subtle: var(--gm-bg-subtle);
+  --surface-alt: var(--gm-bg-subtle);
+  
+  --text-main: var(--gm-text-primary);
+  --text-muted: var(--gm-text-muted);
+  --text-primary: var(--gm-text-primary);
+  --text: var(--gm-text-primary);
+  
+  --accent: var(--gm-accent);
+  --accent-soft: var(--gm-accent-soft);
+  --accent-subtle: var(--gm-accent-subtle);
+  --accent-text: var(--gm-accent-text);
+  
+  --success: var(--gm-success);
+  --warning: var(--gm-warning);
+  --danger: var(--gm-danger);
+  
+  --input-bg: var(--gm-bg-input);
+  --primary: var(--gm-accent);
+  --success-bg: var(--gm-success-bg);
+}
+
+/* ========================================
+   SHARED TOKENS (Theme-independent)
+   ======================================== */
+:root {
+  /* Typography */
+  --gm-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --gm-font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+  
+  --gm-font-size-xs: 0.75rem;
+  --gm-font-size-sm: 0.875rem;
+  --gm-font-size-base: 1rem;
+  --gm-font-size-lg: 1.125rem;
+  --gm-font-size-xl: 1.25rem;
+  --gm-font-size-2xl: 1.5rem;
+  --gm-font-size-3xl: 1.875rem;
+  
+  --gm-font-weight-normal: 400;
+  --gm-font-weight-medium: 500;
+  --gm-font-weight-semibold: 600;
+  --gm-font-weight-bold: 700;
+  
+  --gm-line-height-tight: 1.25;
+  --gm-line-height-normal: 1.5;
+  --gm-line-height-relaxed: 1.75;
+  
+  /* Spacing */
+  --gm-space-1: 0.25rem;
+  --gm-space-2: 0.5rem;
+  --gm-space-3: 0.75rem;
+  --gm-space-4: 1rem;
+  --gm-space-5: 1.25rem;
+  --gm-space-6: 1.5rem;
+  --gm-space-8: 2rem;
+  --gm-space-10: 2.5rem;
+  --gm-space-12: 3rem;
+  
+  /* Border radius */
+  --gm-radius-sm: 4px;
+  --gm-radius: 6px;
+  --gm-radius-md: 8px;
+  --gm-radius-lg: 12px;
+  --gm-radius-xl: 16px;
+  --gm-radius-full: 9999px;
+  
+  /* Z-index layers */
+  --gm-z-dropdown: 100;
+  --gm-z-sticky: 200;
+  --gm-z-modal: 300;
+  --gm-z-toast: 400;
+  --gm-z-tooltip: 500;
+  
+  /* Transitions */
+  --gm-transition-fast: 0.15s ease;
+  --gm-transition: 0.2s ease;
+  --gm-transition-slow: 0.3s ease;
+  
+  /* Layout */
+  --app-max-width: 1400px;
+  --sidebar-width: 320px;
+  --mobile-nav-breakpoint: 768px;
+  --drawer-width: 300px;
+}

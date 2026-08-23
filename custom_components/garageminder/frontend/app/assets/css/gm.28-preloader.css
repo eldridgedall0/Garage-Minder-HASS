@@ -1,0 +1,225 @@
+/* =============================================================
+   GarageMinder — Preloader (gm.26-preloader.css)
+   Gear & wrench animation — theme-aware via CSS custom properties.
+   Both dark (.gm-theme-dark / :root) and light (.gm-theme-light)
+   are inherited automatically — no hardcoded colors here.
+   ============================================================= */
+
+/* ── Overlay ─────────────────────────────────────────────── */
+#gm-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+
+  /* Uses the body-level CSS variable so dark/light theme is respected */
+  background-color: var(--gm-bg-body);
+
+  /*
+   * Dark theme provides a radial gradient via --gm-bg-body-gradient.
+   * Light theme sets --gm-bg-body-gradient: none !important (see tokens.css).
+   * We layer the gradient on top of the solid background-color so both themes
+   * work without any JS intervention.
+   */
+  background-image: var(--gm-bg-body-gradient, none);
+
+  transition: opacity 0.45s ease, visibility 0.45s ease;
+}
+
+#gm-preloader.gm-preloader--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ── Icon assembly ───────────────────────────────────────── */
+.gm-preloader__icons {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Large spinning gear */
+.gm-preloader__gear-large {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  animation: gm-spin-cw 2.4s linear infinite;
+  color: var(--gm-accent);
+  opacity: 0.85;
+}
+
+/* Small counter-rotating gear (bottom-right) */
+.gm-preloader__gear-small {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  animation: gm-spin-ccw 1.6s linear infinite;
+  color: var(--gm-accent);
+  opacity: 0.6;
+}
+
+/* Glow on dark theme */
+.gm-theme-dark .gm-preloader__gear-large,
+:root:not(.gm-theme-light) .gm-preloader__gear-large {
+  filter: drop-shadow(0 0 10px rgba(56,189,248,0.45));
+}
+.gm-theme-dark .gm-preloader__gear-small,
+:root:not(.gm-theme-light) .gm-preloader__gear-small {
+  filter: drop-shadow(0 0 6px rgba(56,189,248,0.3));
+}
+
+/* Subtler glow on light theme */
+.gm-theme-light .gm-preloader__gear-large {
+  filter: drop-shadow(0 0 8px rgba(2,132,199,0.3));
+}
+.gm-theme-light .gm-preloader__gear-small {
+  filter: drop-shadow(0 0 5px rgba(2,132,199,0.2));
+}
+
+/* Wrench — centered, rocking */
+.gm-preloader__wrench {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  color: var(--gm-text-primary);
+  opacity: 0.9;
+  animation: gm-wrench-rock 1.8s ease-in-out infinite;
+  transform-origin: 50% 70%;
+}
+
+/* Light-theme: add subtle card shadow around icon cluster for depth */
+.gm-theme-light .gm-preloader__icons {
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.09));
+}
+
+/* ── Text ────────────────────────────────────────────────── */
+.gm-preloader__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.gm-preloader__app-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--gm-text-primary);
+  letter-spacing: 0.04em;
+  opacity: 0;
+  animation: gm-fade-up 0.5s ease 0.25s forwards;
+}
+
+.gm-preloader__status {
+  font-size: 0.78rem;
+  color: var(--gm-text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: gm-fade-up 0.5s ease 0.4s forwards;
+  min-height: 1.1em;
+}
+
+/* ── Progress bar ────────────────────────────────────────── */
+.gm-preloader__bar-wrap {
+  width: 160px;
+  height: 3px;
+  background: var(--gm-border);
+  border-radius: 9999px;
+  overflow: hidden;
+  opacity: 0;
+  animation: gm-fade-up 0.5s ease 0.55s forwards;
+}
+
+.gm-preloader__bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gm-accent), var(--gm-accent-text));
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+/* Bar glow: dark theme */
+.gm-theme-dark .gm-preloader__bar,
+:root:not(.gm-theme-light) .gm-preloader__bar {
+  box-shadow: 0 0 8px rgba(56,189,248,0.6);
+}
+
+/* Bar glow: light theme */
+.gm-theme-light .gm-preloader__bar {
+  box-shadow: 0 0 8px rgba(2,132,199,0.4);
+}
+
+/* Indeterminate shimmer */
+.gm-preloader__bar--indeterminate {
+  width: 40% !important;
+  animation: gm-bar-shimmer 1.4s ease-in-out infinite;
+}
+
+/* ── Offline badge ───────────────────────────────────────── */
+.gm-preloader__offline {
+  display: none;
+  font-size: 0.72rem;
+  color: var(--gm-warning-text, var(--gm-warning));
+  background: var(--gm-warning-bg);
+  border: 1px solid var(--gm-warning);
+  border-radius: 999px;
+  padding: 3px 10px;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+
+.gm-preloader__offline.visible {
+  display: block;
+}
+
+/* ── Keyframes ───────────────────────────────────────────── */
+@keyframes gm-spin-cw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes gm-spin-ccw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+@keyframes gm-wrench-rock {
+  0%, 100% { transform: rotate(-18deg); }
+  25%       { transform: rotate(18deg); }
+  50%       { transform: rotate(-10deg); }
+  75%       { transform: rotate(14deg); }
+}
+
+@keyframes gm-fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gm-bar-shimmer {
+  0%   { margin-left: 0;   width: 40%; }
+  50%  { margin-left: 60%; width: 40%; }
+  100% { margin-left: 0;   width: 40%; }
+}
+
+/* ── Respect reduced-motion preference ───────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .gm-preloader__gear-large,
+  .gm-preloader__gear-small,
+  .gm-preloader__wrench {
+    animation: none;
+  }
+  .gm-preloader__bar--indeterminate {
+    animation: none;
+    width: 60% !important;
+  }
+}

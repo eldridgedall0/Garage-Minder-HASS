@@ -1,0 +1,200 @@
+/**
+ * GarageMinder Base Styles
+ * 
+ * FIXES:
+ * - Issue #1: Body background now uses theme variable, light theme gets solid color
+ */
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ISSUE #1 FIX: Use theme-aware background */
+body {
+  font-family: var(--gm-font-family);
+  font-size: var(--gm-font-size-base);
+  line-height: var(--gm-line-height-normal);
+  color: var(--gm-text-primary);
+  background-color: var(--gm-bg-body);
+  background-image: var(--gm-bg-body-gradient);
+  min-height: 100vh;
+  transition: background-color var(--gm-transition), color var(--gm-transition);
+}
+
+/* Light theme override - ensure no gradient */
+.gm-theme-light body,
+body.gm-theme-light {
+  background-image: none !important;
+  background-color: #f8fafc !important;
+}
+
+/* Links */
+a {
+  color: var(--gm-text-link);
+  text-decoration: none;
+  transition: color var(--gm-transition-fast);
+}
+
+a:hover {
+  color: var(--gm-text-link-hover);
+  text-decoration: underline;
+}
+
+/* Focus states */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--gm-focus-ring);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--gm-selection-bg);
+  color: var(--gm-selection-text);
+}
+
+/* Text utilities */
+.text-muted {
+  color: var(--gm-text-muted) !important;
+}
+
+.text-secondary {
+  color: var(--gm-text-secondary) !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--gm-text-primary);
+  font-weight: var(--gm-font-weight-semibold);
+  line-height: var(--gm-line-height-tight);
+}
+
+/* Form elements base styling */
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="tel"],
+textarea,
+select {
+  background-color: var(--gm-bg-input);
+  border: 1px solid var(--gm-border-input);
+  color: var(--gm-text-primary);
+  padding: var(--gm-space-2) var(--gm-space-3);
+  border-radius: var(--gm-radius);
+  transition: border-color var(--gm-transition-fast), 
+              background-color var(--gm-transition-fast),
+              box-shadow var(--gm-transition-fast);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+select:focus {
+  background-color: var(--gm-bg-input-focus);
+  border-color: var(--gm-border-focus);
+  outline: none;
+  box-shadow: var(--gm-focus-ring);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--gm-text-muted);
+}
+
+/* Disabled states */
+input:disabled,
+textarea:disabled,
+select:disabled,
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Labels */
+label {
+  color: var(--gm-text-secondary);
+  font-size: var(--gm-font-size-sm);
+  font-weight: var(--gm-font-weight-medium);
+}
+
+/* Small/helper text */
+small {
+  color: var(--gm-text-muted);
+  font-size: var(--gm-font-size-xs);
+}
+
+/* HR */
+hr {
+  border: none;
+  border-top: 1px solid var(--gm-border);
+  margin: var(--gm-space-4) 0;
+}
+
+/* Code */
+code {
+  font-family: var(--gm-font-mono);
+  font-size: 0.9em;
+  background-color: var(--gm-bg-elevated);
+  padding: 0.125em 0.375em;
+  border-radius: var(--gm-radius-sm);
+  color: var(--gm-text-primary);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: var(--gm-space-2) var(--gm-space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--gm-border);
+}
+
+th {
+  color: var(--gm-text-secondary);
+  font-weight: var(--gm-font-weight-semibold);
+  background-color: var(--gm-bg-elevated);
+}
+
+tr:nth-child(even) {
+  background-color: var(--gm-row-even);
+}
+
+tr:nth-child(odd) {
+  background-color: var(--gm-row-odd);
+}
+
+tr:hover {
+  background-color: var(--gm-row-hover);
+}
+
+/* Select dropdown styling for light theme */
+.gm-theme-light select option {
+  background-color: var(--gm-bg-dropdown);
+  color: var(--gm-text-primary);
+}

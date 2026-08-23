@@ -1,0 +1,46 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "GarageMinder",
+        "description": "Your garage data is stored in Home Assistant and included in every backup. You can change any of this later.",
+        "data": { "unit": "Distance unit" }
+      }
+    },
+    "abort": { "already_configured": "GarageMinder is already set up." }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "GarageMinder options",
+        "description": "Status thresholds match the web app's settings. Optionally point each vehicle at an entity that reports its mileage - a connected car, an OBD-II dongle, or a helper you update yourself - and mileage stops being something you type in.",
+        "data": {
+          "unit": "Distance unit",
+          "upcoming_threshold_days": "Mark as upcoming within (days)",
+          "upcoming_threshold_miles": "Mark as upcoming within (distance)",
+          "overdue_threshold_days": "Overdue grace period (days)",
+          "overdue_threshold_miles": "Overdue grace period (distance)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "odometer": { "name": "Odometer" },
+      "next_service": { "name": "Next service" },
+      "next_service_due": { "name": "Next service due" },
+      "distance_to_next_service": { "name": "Distance to next service" },
+      "overdue_count": { "name": "Overdue services" },
+      "upcoming_count": { "name": "Upcoming services" },
+      "last_service": { "name": "Last service" },
+      "spend_ytd": { "name": "Spend this year" }
+    },
+    "binary_sensor": {
+      "maintenance_overdue": { "name": "Maintenance overdue" },
+      "service_due_soon": { "name": "Service due soon" },
+      "registration_due": { "name": "Registration due" },
+      "insurance_due": { "name": "Insurance due" },
+      "inspection_due": { "name": "Inspection due" }
+    }
+  }
+}

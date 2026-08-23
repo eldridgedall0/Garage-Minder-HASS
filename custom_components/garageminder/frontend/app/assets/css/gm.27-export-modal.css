@@ -1,0 +1,444 @@
+/**
+ * GarageMinder - Vehicle Report Export Modal Styles
+ */
+
+/* Modal Overlay */
+.export-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: exportFadeIn 0.2s ease;
+}
+
+@keyframes exportFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal Container */
+.export-modal {
+  background: var(--surface, #fff);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  animation: exportSlideUp 0.25s ease;
+}
+
+@keyframes exportSlideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Header */
+.export-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border, #e5e7eb);
+  background: var(--surface-alt, #f9fafb);
+}
+
+.export-modal-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary, #1f2937);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.export-modal-header h2 i {
+  color: var(--primary, #3b82f6);
+}
+
+.export-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-muted, #9ca3af);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.export-modal-close:hover {
+  color: var(--text-primary, #1f2937);
+}
+
+/* Modal Body */
+.export-modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Vehicle Info Bar */
+.export-vehicle-info {
+  background: var(--surface-alt, #f3f4f6);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.export-vehicle-info strong {
+  color: var(--text-primary, #1f2937);
+  font-size: 14px;
+}
+
+.export-vehicle-info span {
+  color: var(--text-muted, #6b7280);
+  font-size: 12px;
+}
+
+/* Section Styling */
+.export-section {
+  margin-bottom: 20px;
+}
+
+.export-section-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #4b5563);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.export-section-label small {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted, #9ca3af);
+}
+
+/* Format Selection */
+.export-format-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.export-format-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 8px;
+  border: 2px solid var(--border, #e5e7eb);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--surface, #fff);
+}
+
+.export-format-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.export-format-option i {
+  font-size: 24px;
+  color: var(--text-muted, #9ca3af);
+  margin-bottom: 6px;
+  transition: color 0.15s;
+}
+
+.export-format-option span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary, #4b5563);
+}
+
+.export-format-option small {
+  font-size: 10px;
+  color: var(--text-muted, #9ca3af);
+  margin-top: 2px;
+}
+
+.export-format-option:hover {
+  border-color: var(--primary-light, #93c5fd);
+  background: var(--surface-alt, #f9fafb);
+}
+
+.export-format-option.selected {
+  border-color: var(--primary, #3b82f6);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.export-format-option.selected i {
+  color: var(--primary, #3b82f6);
+}
+
+.export-format-option.selected span {
+  color: var(--primary, #3b82f6);
+}
+
+/* Date Range Select */
+.export-date-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.export-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-primary, #1f2937);
+  background: var(--surface, #fff);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.export-select:focus {
+  outline: none;
+  border-color: var(--primary, #3b82f6);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.export-custom-dates {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.export-custom-dates input[type="date"] {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-primary, #1f2937);
+  background: var(--surface, #fff);
+}
+
+.export-custom-dates input[type="date"]:focus {
+  outline: none;
+  border-color: var(--primary, #3b82f6);
+}
+
+.export-custom-dates span {
+  color: var(--text-muted, #9ca3af);
+  font-size: 12px;
+}
+
+/* Checkbox Groups */
+.export-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.export-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 13px;
+  color: var(--text-secondary, #4b5563);
+  background: var(--surface, #fff);
+}
+
+.export-checkbox:hover {
+  border-color: var(--primary-light, #93c5fd);
+  background: var(--surface-alt, #f9fafb);
+}
+
+.export-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary, #3b82f6);
+  cursor: pointer;
+}
+
+.export-checkbox input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.export-checkbox input[type="checkbox"]:disabled + span {
+  opacity: 0.5;
+}
+
+/* Sections Group (PDF/Word only) */
+.export-sections-group {
+  padding-top: 15px;
+  border-top: 1px solid var(--border, #e5e7eb);
+}
+
+/* Modal Footer */
+.export-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border, #e5e7eb);
+  background: var(--surface-alt, #f9fafb);
+}
+
+.export-btn-secondary {
+  padding: 10px 20px;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: 8px;
+  background: var(--surface, #fff);
+  color: var(--text-secondary, #4b5563);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.export-btn-secondary:hover {
+  background: var(--surface-alt, #f3f4f6);
+  border-color: var(--border-dark, #d1d5db);
+}
+
+.export-btn-primary {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary, #3b82f6);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.export-btn-primary:hover {
+  background: var(--primary-dark, #2563eb);
+}
+
+.export-btn-primary i {
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 540px) {
+  .export-modal {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 0;
+  }
+  
+  .export-format-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .export-checkbox-group {
+    flex-direction: column;
+  }
+  
+  .export-checkbox {
+    width: 100%;
+  }
+  
+  .export-custom-dates {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .export-custom-dates span {
+    text-align: center;
+  }
+}
+
+/* Dark Theme Support */
+.gm-theme-dark .export-modal {
+  background: var(--surface, #1f2937);
+}
+
+.gm-theme-dark .export-modal-header {
+  background: var(--surface-alt, #111827);
+  border-color: var(--border, #374151);
+}
+
+.gm-theme-dark .export-modal-header h2 {
+  color: var(--text-primary, #f9fafb);
+}
+
+.gm-theme-dark .export-vehicle-info {
+  background: var(--surface-alt, #111827);
+}
+
+.gm-theme-dark .export-vehicle-info strong {
+  color: var(--text-primary, #f9fafb);
+}
+
+.gm-theme-dark .export-format-option {
+  background: var(--surface, #1f2937);
+  border-color: var(--border, #374151);
+}
+
+.gm-theme-dark .export-format-option:hover {
+  background: var(--surface-alt, #111827);
+}
+
+.gm-theme-dark .export-format-option.selected {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.gm-theme-dark .export-select,
+.gm-theme-dark .export-custom-dates input[type="date"] {
+  background: var(--surface, #1f2937);
+  border-color: var(--border, #374151);
+  color: var(--text-primary, #f9fafb);
+}
+
+.gm-theme-dark .export-checkbox {
+  background: var(--surface, #1f2937);
+  border-color: var(--border, #374151);
+  color: var(--text-secondary, #d1d5db);
+}
+
+.gm-theme-dark .export-modal-footer {
+  background: var(--surface-alt, #111827);
+  border-color: var(--border, #374151);
+}
+
+.gm-theme-dark .export-btn-secondary {
+  background: var(--surface, #1f2937);
+  border-color: var(--border, #374151);
+  color: var(--text-secondary, #d1d5db);
+}
+
+.gm-theme-dark .export-btn-secondary:hover {
+  background: var(--surface-alt, #111827);
+}

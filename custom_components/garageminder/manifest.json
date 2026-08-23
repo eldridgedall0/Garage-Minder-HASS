@@ -1,0 +1,13 @@
+{
+  "domain": "garageminder",
+  "name": "GarageMinder",
+  "codeowners": ["@eldridgedall0"],
+  "config_flow": true,
+  "dependencies": ["http", "frontend", "websocket_api"],
+  "documentation": "https://github.com/eldridgedall0/garageminder-hass",
+  "integration_type": "service",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/eldridgedall0/garageminder-hass/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

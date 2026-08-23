@@ -1,0 +1,311 @@
+/**
+ * Garage Maintenance - PWA Install UI Styles
+ * Theme-aware version using CSS custom properties
+ */
+
+/* PWA Install Container (in Settings) */
+#pwa-install-container {
+  display: none;
+  margin-bottom: 16px;
+}
+
+.pwa-install-section {
+  background: var(--gm-gradient-card-highlight);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius-lg);
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pwa-install-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--gm-accent-muted) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.pwa-install-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pwa-install-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.pwa-install-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pwa-install-text strong {
+  font-size: 1rem;
+  color: var(--gm-text-primary);
+}
+
+.pwa-install-desc {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+}
+
+/* Install Instructions */
+.pwa-instructions {
+  background: var(--gm-bg-subtle);
+  border-radius: var(--gm-radius);
+  padding: 12px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.pwa-instructions p {
+  margin: 0 0 8px 0;
+  color: var(--gm-text-primary);
+}
+
+.pwa-instructions ol {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--gm-text-muted);
+}
+
+.pwa-instructions li {
+  margin-bottom: 4px;
+}
+
+.pwa-icon {
+  display: inline-block;
+  font-style: normal;
+}
+
+/* iOS-specific Steps */
+.pwa-ios-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pwa-ios-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--gm-bg-subtle);
+  border-radius: var(--gm-radius);
+  padding: 10px 12px;
+}
+
+.pwa-step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--gm-accent);
+  color: var(--gm-text-inverse);
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.pwa-step-text {
+  color: var(--gm-text-muted);
+  font-size: 0.9rem;
+}
+
+.pwa-step-text strong {
+  color: var(--gm-text-primary);
+}
+
+.pwa-share-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--gm-accent);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  vertical-align: middle;
+  margin-left: 2px;
+  color: var(--gm-text-inverse);
+}
+
+/* Install Actions */
+.pwa-install-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Platform Indicators */
+.pwa-install-platforms {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.pwa-platform {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  background: var(--gm-bg-elevated);
+  border-radius: 4px;
+  color: var(--gm-text-muted);
+  opacity: 0.5;
+}
+
+.pwa-platform.active {
+  background: var(--gm-accent);
+  color: var(--gm-text-inverse);
+  opacity: 1;
+}
+
+/* Update Banner */
+.pwa-update-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--gm-gradient-card-highlight);
+  border-top: 1px solid var(--gm-accent);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 10000;
+  animation: slideUp 0.3s ease-out;
+}
+
+.pwa-update-banner span {
+  color: var(--gm-text-primary);
+  font-size: 0.9rem;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile Install Banner (optional floating style) */
+.pwa-floating-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--gm-bg-card);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius-lg);
+  box-shadow: var(--gm-shadow-lg);
+  z-index: 9999;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.pwa-floating-banner .pwa-banner-icon {
+  font-size: 1.5rem;
+}
+
+.pwa-floating-banner .pwa-banner-text {
+  flex: 1;
+}
+
+.pwa-floating-banner .pwa-banner-text strong {
+  display: block;
+  color: var(--gm-text-primary);
+  font-size: 0.9rem;
+}
+
+.pwa-floating-banner .pwa-banner-text small {
+  color: var(--gm-text-muted);
+  font-size: 0.8rem;
+}
+
+.pwa-floating-banner .pwa-banner-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--gm-text-muted);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 4px;
+  line-height: 1;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .pwa-install-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .pwa-install-icon {
+    font-size: 1.5rem;
+  }
+  
+  .pwa-install-actions {
+    flex-direction: column;
+  }
+  
+  .pwa-install-actions button {
+    width: 100%;
+  }
+  
+  .pwa-update-banner {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .pwa-floating-banner {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
+}
+
+/* Standalone mode adjustments */
+@media (display-mode: standalone) {
+  #pwa-install-container {
+    display: none !important;
+  }
+  
+  .pwa-update-banner,
+  .pwa-floating-banner {
+    bottom: env(safe-area-inset-bottom, 0);
+  }
+}

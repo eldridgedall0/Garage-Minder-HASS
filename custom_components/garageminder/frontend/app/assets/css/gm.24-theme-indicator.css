@@ -1,0 +1,189 @@
+/**
+ * GarageMinder Settings - Theme Indicator Addition
+ * 
+ * Add this CSS to gm.08-settings.css or include as a separate file
+ * This adds styling for the theme indicator section
+ */
+
+/* ========================================
+   THEME INDICATOR SECTION
+   ======================================== */
+.theme-indicator-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--gm-space-4);
+  background-color: var(--gm-bg-elevated);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius-md);
+  margin-bottom: var(--gm-space-4);
+}
+
+.theme-indicator-info {
+  display: flex;
+  align-items: center;
+  gap: var(--gm-space-3);
+}
+
+.theme-indicator-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gm-accent-muted);
+  border-radius: var(--gm-radius);
+  font-size: 1.25rem;
+  color: var(--gm-accent);
+}
+
+.theme-indicator-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.theme-indicator-label {
+  font-size: var(--gm-font-size-sm);
+  color: var(--gm-text-muted);
+}
+
+.theme-indicator-value {
+  font-size: var(--gm-font-size-base);
+  font-weight: var(--gm-font-weight-semibold);
+  color: var(--gm-text-primary);
+  text-transform: capitalize;
+}
+
+.theme-indicator-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gm-space-2);
+  padding: var(--gm-space-2) var(--gm-space-3);
+  background-color: var(--gm-btn-ghost-bg);
+  color: var(--gm-accent);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius);
+  font-size: var(--gm-font-size-sm);
+  font-weight: var(--gm-font-weight-medium);
+  text-decoration: none;
+  transition: all var(--gm-transition-fast);
+}
+
+.theme-indicator-link:hover {
+  background-color: var(--gm-accent-muted);
+  border-color: var(--gm-accent);
+  text-decoration: none;
+}
+
+.theme-indicator-link i {
+  font-size: 0.875rem;
+}
+
+/* Responsive adjustment */
+@media (max-width: 480px) {
+  .theme-indicator-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gm-space-3);
+  }
+  
+  .theme-indicator-link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ========================================
+   SETTINGS SECTIONS (update existing styles to use tokens)
+   ======================================== */
+.settings-section {
+  margin-bottom: var(--gm-space-6);
+  padding-bottom: var(--gm-space-4);
+  border-bottom: 1px solid var(--gm-border-light);
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.settings-section h3 {
+  font-size: var(--gm-font-size-base);
+  font-weight: var(--gm-font-weight-semibold);
+  color: var(--gm-text-primary);
+  margin-bottom: var(--gm-space-2);
+}
+
+/* Settings tabs */
+.settings-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gm-space-1);
+  margin-bottom: var(--gm-space-4);
+  padding-bottom: var(--gm-space-3);
+  border-bottom: 1px solid var(--gm-border);
+}
+
+.settings-tab-btn {
+  padding: var(--gm-space-2) var(--gm-space-4);
+  background-color: var(--gm-btn-ghost-bg);
+  color: var(--gm-text-secondary);
+  border: 1px solid transparent;
+  border-radius: var(--gm-radius);
+  font-size: var(--gm-font-size-sm);
+  font-weight: var(--gm-font-weight-medium);
+  cursor: pointer;
+  transition: all var(--gm-transition-fast);
+}
+
+.settings-tab-btn:hover {
+  background-color: var(--gm-btn-ghost-bg-hover);
+  color: var(--gm-text-primary);
+}
+
+.settings-tab-btn.active {
+  background-color: var(--gm-accent);
+  color: var(--gm-text-inverse);
+}
+
+.settings-tab-view {
+  display: none;
+}
+
+.settings-tab-view.active {
+  display: block;
+}
+
+/* Settings list items */
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gm-space-2);
+  margin-bottom: var(--gm-space-4);
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--gm-space-3);
+  background-color: var(--gm-bg-elevated);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius);
+}
+
+.settings-item:hover {
+  background-color: var(--gm-bg-card-hover);
+}
+
+/* Settings add row */
+.settings-add-row {
+  display: flex;
+  gap: var(--gm-space-2);
+  margin-top: var(--gm-space-3);
+}
+
+.settings-add-row input {
+  flex: 1;
+}

@@ -1,0 +1,387 @@
+/**
+ * GarageMinder Shell/Layout Styles
+ * 
+ * FIXES:
+ * - Issue #9: Professional vehicle picker with inline odometer update for desktop
+ */
+
+/* App container */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  padding: var(--gm-space-4);
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--gm-space-4);
+  padding: var(--gm-space-4) var(--gm-space-6);
+  background-color: var(--gm-bg-header);
+  border-radius: var(--gm-radius-lg);
+  margin-bottom: var(--gm-space-4);
+  border: 1px solid var(--gm-border);
+  box-shadow: var(--gm-shadow-card);
+}
+
+/* Title block */
+.title-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gm-space-1);
+}
+
+.logo-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gm-space-3);
+}
+
+.app-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--gm-radius-md);
+}
+
+.title-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-title {
+  font-size: var(--gm-font-size-xl);
+  font-weight: var(--gm-font-weight-bold);
+  color: var(--gm-text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+#site-title.custom-title {
+  font-size: var(--gm-font-size-sm);
+  color: var(--gm-text-muted);
+}
+
+.tagline {
+  font-size: var(--gm-font-size-sm);
+  color: var(--gm-text-muted);
+  margin-left: 60px;
+}
+
+/* Top controls (nav + vehicle picker) */
+.top-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gm-space-4);
+}
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+.nav {
+  display: flex;
+  gap: var(--gm-space-2);
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gm-space-2);
+  padding: var(--gm-space-2) var(--gm-space-4);
+  background-color: var(--gm-btn-ghost-bg);
+  color: var(--gm-btn-ghost-text);
+  border: 1px solid var(--gm-btn-ghost-border);
+  border-radius: var(--gm-radius);
+  font-size: var(--gm-font-size-sm);
+  font-weight: var(--gm-font-weight-medium);
+  cursor: pointer;
+  transition: all var(--gm-transition-fast);
+}
+
+.nav-btn:hover {
+  background-color: var(--gm-btn-ghost-bg-hover);
+  color: var(--gm-btn-ghost-text-hover);
+}
+
+.nav-btn.active {
+  background-color: var(--gm-accent);
+  color: var(--gm-text-inverse);
+  border-color: var(--gm-accent);
+}
+
+.nav-btn i {
+  font-size: 1rem;
+}
+
+/* ========================================
+   VEHICLE PICKER - Issue #9 Redesign
+   ======================================== */
+.vehicle-picker {
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: var(--gm-bg-card);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius-lg);
+}
+
+.vehicle-picker-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gm-text-muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.vehicle-picker-label i {
+  font-size: 1rem;
+  color: var(--gm-accent);
+}
+
+.vehicle-picker select {
+  min-width: 180px;
+  padding: 8px 12px;
+  background-color: var(--gm-bg-input);
+  color: var(--gm-text-primary);
+  border: 1px solid var(--gm-border-input);
+  border-radius: var(--gm-radius);
+  font-size: var(--gm-font-size-sm);
+  cursor: pointer;
+}
+
+.vehicle-picker select:focus {
+  border-color: var(--gm-accent);
+  box-shadow: var(--gm-focus-ring);
+  outline: none;
+}
+
+/* Odometer section - inline for desktop */
+.vehicle-picker-odo-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--gm-border);
+}
+
+.vehicle-picker-odo-label {
+  color: var(--gm-text-muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.vehicle-picker-odo-input-group {
+  display: flex;
+  align-items: center;
+  background: var(--gm-bg-input);
+  border: 1px solid var(--gm-border-input);
+  border-radius: var(--gm-radius);
+  overflow: hidden;
+  transition: border-color var(--gm-transition-fast), box-shadow var(--gm-transition-fast);
+}
+
+.vehicle-picker-odo-input-group:focus-within {
+  border-color: var(--gm-accent);
+  box-shadow: var(--gm-focus-ring);
+}
+
+.vehicle-picker-odo-input {
+  width: 90px;
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  color: var(--gm-text-primary);
+  font-size: 0.85rem;
+  font-family: var(--gm-font-mono);
+  text-align: right;
+}
+
+.vehicle-picker-odo-input:focus {
+  outline: none;
+}
+
+.vehicle-picker-odo-unit {
+  padding: 6px 8px;
+  background: var(--gm-bg-subtle);
+  color: var(--gm-text-muted);
+  font-size: 0.75rem;
+  border-left: 1px solid var(--gm-border-subtle);
+}
+
+.vehicle-picker-odo-save {
+  padding: 6px 12px;
+  background: var(--gm-accent);
+  color: var(--gm-text-inverse);
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--gm-transition-fast);
+}
+
+.vehicle-picker-odo-save:hover {
+  background: var(--gm-accent-hover);
+}
+
+.vehicle-picker-odo-save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile layout for vehicle picker */
+@media (max-width: 900px) {
+  .vehicle-picker {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .vehicle-picker-label {
+    display: none;
+  }
+  
+  .vehicle-picker select {
+    width: 100%;
+    min-width: 0;
+  }
+  
+  .vehicle-picker-odo-section {
+    border-left: none;
+    padding-left: 0;
+    padding-top: 10px;
+    border-top: 1px solid var(--gm-border);
+    justify-content: space-between;
+  }
+}
+
+/* Hide odometer section on very small mobile - Issue #9 only desktop */
+@media (max-width: 650px) {
+  .vehicle-picker-odo-section {
+    display: none;
+  }
+}
+
+/* Old vehicle picker styles (deprecated but keep for compatibility) */
+.vehicle-picker-select-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gm-space-2);
+  color: var(--gm-text-secondary);
+  font-size: var(--gm-font-size-sm);
+}
+
+#vehicle-picker-odo {
+  font-size: var(--gm-font-size-xs);
+  color: var(--gm-text-muted);
+  padding: 5px 9px;
+}
+
+/* ========================================
+   MAIN CONTENT
+   ======================================== */
+main {
+  flex: 1;
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+.card {
+  background-color: var(--gm-bg-card);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius-lg);
+  padding: var(--gm-space-5);
+  margin-bottom: var(--gm-space-4);
+  box-shadow: var(--gm-shadow-card);
+}
+
+.card-header {
+  margin-bottom: var(--gm-space-4);
+  padding-bottom: var(--gm-space-3);
+  border-bottom: 1px solid var(--gm-border-light);
+}
+
+.card-header h2 {
+  font-size: var(--gm-font-size-lg);
+  color: var(--gm-text-primary);
+  margin: 0 0 var(--gm-space-1) 0;
+}
+
+.card-header small {
+  color: var(--gm-text-muted);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--gm-space-4) var(--gm-space-6);
+  margin-top: var(--gm-space-4);
+  background-color: var(--gm-bg-footer);
+  border-radius: var(--gm-radius-lg);
+  border: 1px solid var(--gm-border);
+  font-size: var(--gm-font-size-xs);
+  color: var(--gm-text-muted);
+}
+
+/* ========================================
+   STATS ROW (Pills)
+   ======================================== */
+.stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gm-space-3);
+  margin-bottom: var(--gm-space-4);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gm-space-2);
+  padding: var(--gm-space-1) var(--gm-space-3);
+  background-color: var(--gm-bg-elevated);
+  border-radius: var(--gm-radius-full);
+  font-size: var(--gm-font-size-sm);
+  color: var(--gm-text-secondary);
+}
+
+.pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--gm-pill-dot-default);
+}
+
+.pill-dot.warn {
+  background-color: var(--gm-pill-dot-warn);
+}
+
+.pill-dot.bad {
+  background-color: var(--gm-pill-dot-bad);
+}
+
+.pill-dot.good {
+  background-color: var(--gm-pill-dot-good);
+}

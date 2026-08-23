@@ -1,0 +1,227 @@
+/**
+ * Garage Maintenance - Safety status & recall modal
+ * Theme-aware version with fixed modal centering
+ */
+
+/* ============================================
+   SAFETY STATUS & RECALLS
+   ============================================ */
+.safety-status-row {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.safety-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.safety-icon {
+  font-size: 1.1rem;
+}
+
+.safety-label {
+  color: var(--gm-text-muted);
+}
+
+.safety-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: var(--gm-radius-full);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.safety-badge.no-recalls {
+  background: var(--gm-success-bg);
+  color: var(--gm-success-text);
+  border: 1px solid var(--gm-success);
+}
+
+.safety-badge.has-recalls {
+  background: var(--gm-warning-bg);
+  color: var(--gm-warning-text);
+  border: 1px solid var(--gm-warning);
+}
+
+.safety-badge.unknown {
+  background: var(--gm-bg-elevated);
+  color: var(--gm-text-muted);
+  border: 1px solid var(--gm-border);
+}
+
+/* ============================================
+   RECALL MODAL - FIXED CENTERING
+   ============================================ */
+.recall-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--gm-z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.recall-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gm-bg-modal-overlay);
+  backdrop-filter: blur(4px);
+}
+
+.recall-modal-content {
+  position: relative;
+  background: var(--gm-bg-modal);
+  border-radius: var(--gm-radius-lg);
+  border: 1px solid var(--gm-border);
+  box-shadow: var(--gm-shadow-lg);
+  width: 100%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.recall-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--gm-border);
+  background: var(--gm-bg-subtle);
+}
+
+.recall-modal-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--gm-text-primary);
+}
+
+.recall-modal-close {
+  background: none;
+  border: none;
+  color: var(--gm-text-muted);
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--gm-radius);
+  transition: all var(--gm-transition-fast);
+}
+
+.recall-modal-close:hover {
+  background: var(--gm-bg-hover);
+  color: var(--gm-text-primary);
+}
+
+.recall-modal-body {
+  padding: 22px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.recall-item {
+  background: var(--gm-bg-subtle);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.recall-item:last-child {
+  margin-bottom: 0;
+}
+
+.recall-id {
+  font-size: 0.8rem;
+  color: var(--gm-text-muted);
+  margin-bottom: 8px;
+}
+
+.recall-component {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gm-text-primary);
+  margin-bottom: 10px;
+}
+
+.recall-summary {
+  font-size: 0.9rem;
+  color: var(--gm-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.recall-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85rem;
+  color: var(--gm-accent);
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.recall-link:hover {
+  text-decoration: underline;
+}
+
+.no-recalls-message {
+  text-align: center;
+  padding: 35px 22px;
+}
+
+.no-recalls-icon {
+  font-size: 3.5rem;
+  margin-bottom: 14px;
+}
+
+.no-recalls-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gm-success-text);
+  margin-bottom: 10px;
+}
+
+.no-recalls-text {
+  font-size: 0.95rem;
+  color: var(--gm-text-muted);
+  margin-bottom: 18px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .recall-modal {
+    padding: 10px;
+  }
+  
+  .recall-modal-content {
+    max-height: 90vh;
+  }
+  
+  .recall-modal-header {
+    padding: 14px 16px;
+  }
+  
+  .recall-modal-body {
+    padding: 16px;
+  }
+}

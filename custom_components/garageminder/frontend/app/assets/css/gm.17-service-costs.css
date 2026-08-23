@@ -1,0 +1,213 @@
+/**
+ * Garage Maintenance - Service Cost/Note Styling
+ * Theme-aware version using CSS custom properties
+ */
+
+/* ============================================
+   SERVICE ITEM WITH COST/NOTE FIELDS
+   ============================================ */
+.service-item {
+  margin-bottom: 4px;
+}
+
+/* CRITICAL: Filter hidden state for new service-item structure */
+.service-item.filter-hidden {
+  display: none !important;
+}
+
+/* Filter match highlight for service-chip inside service-item */
+.service-item .service-chip.filter-match {
+  border-color: var(--gm-accent-soft);
+  background: var(--gm-accent-subtle);
+}
+
+.service-check-row {
+  display: flex;
+  align-items: center;
+}
+
+.service-details-row {
+  display: flex;
+  gap: 8px;
+  padding: 8px 0 8px 28px;
+  margin-top: 4px;
+  background: var(--gm-bg-subtle);
+  border-radius: 8px;
+  border: 1px solid var(--gm-border-subtle);
+}
+
+.service-cost-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 100px;
+  max-width: 120px;
+}
+
+.service-field-label {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+  font-weight: 500;
+}
+
+.service-cost-input {
+  width: 80px !important;
+  padding: 6px 8px !important;
+  font-size: 0.85rem !important;
+  border-radius: 6px !important;
+  text-align: right;
+  background: var(--gm-bg-input) !important;
+  border: 1px solid var(--gm-border-input) !important;
+  color: var(--gm-text-primary) !important;
+}
+
+.service-note-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.service-note-input {
+  width: 100% !important;
+  padding: 6px 10px !important;
+  font-size: 0.85rem !important;
+  border-radius: 6px !important;
+  background: var(--gm-bg-input) !important;
+  border: 1px solid var(--gm-border-input) !important;
+  color: var(--gm-text-primary) !important;
+}
+
+.service-note-input::placeholder {
+  color: var(--gm-text-muted);
+  opacity: 0.6;
+}
+
+/* ============================================
+   SERVICE COST SUMMARY
+   ============================================ */
+.service-cost-summary {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  background: var(--gm-accent-subtle);
+  border-radius: 8px;
+  border: 1px solid var(--gm-accent-soft);
+}
+
+.cost-summary-label {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+}
+
+.cost-summary-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gm-accent);
+}
+
+/* ============================================
+   ENTRY VIEW - SERVICES BREAKDOWN
+   ============================================ */
+.entry-services-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--gm-bg-subtle);
+  border-radius: var(--gm-radius);
+  border: 1px solid var(--gm-border-subtle);
+}
+
+.entry-service-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--gm-border-subtle);
+}
+
+.entry-service-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.entry-service-row:first-child {
+  padding-top: 0;
+}
+
+.entry-service-name {
+  font-size: 0.9rem;
+  color: var(--gm-text-primary);
+  font-weight: 500;
+  flex: 1;
+  min-width: 120px;
+}
+
+.entry-service-cost {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gm-accent);
+  padding: 2px 8px;
+  background: var(--gm-accent-subtle);
+  border-radius: 4px;
+}
+
+.entry-service-note {
+  font-size: 0.8rem;
+  color: var(--gm-text-muted);
+  font-style: italic;
+  width: 100%;
+  padding-left: 12px;
+  border-left: 2px solid var(--gm-border-subtle);
+  margin-top: 4px;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 600px) {
+  .service-details-row {
+    flex-direction: column;
+    padding: 8px 8px 8px 20px;
+    gap: 6px;
+  }
+  
+  .service-cost-field {
+    max-width: none;
+    width: 100%;
+  }
+  
+  .service-cost-input {
+    flex: 1;
+    width: auto !important;
+    text-align: left;
+  }
+  
+  .entry-service-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .entry-service-cost {
+    order: -1;
+  }
+  
+  .entry-service-note {
+    padding-left: 8px;
+    margin-top: 2px;
+  }
+}
+
+/* ============================================
+   MISC COST FIELD LABEL UPDATE
+   ============================================ */
+.entry-cost-label-updated::after {
+  content: " (taxes, fees, etc.)";
+  font-size: 0.75rem;
+  color: var(--gm-text-muted);
+  font-weight: 400;
+}

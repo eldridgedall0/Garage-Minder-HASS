@@ -1,0 +1,287 @@
+/**
+ * Garage Maintenance - Responsive rules
+ * Updated to work with mobile navigation drawer and theme system
+ */
+
+/* ============================================
+   RESPONSIVE - LARGE DESKTOP
+   ============================================ */
+@media (max-width: 1400px) {
+  :root {
+    --app-max-width: 1200px;
+    --sidebar-width: 300px;
+  }
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --sidebar-width: 280px;
+  }
+  
+  .dashboard-layout {
+    gap: 18px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - TABLET
+   ============================================ */
+@media (max-width: 1024px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-sidebar {
+    position: static;
+    order: -1;
+  }
+  
+  .reminder-snippet-list {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  .top-controls {
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .nav {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .vehicle-picker {
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .vehicle-picker-select-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .vehicle-picker select {
+    min-width: 0;
+    width: 100%;
+  }
+  
+  .vehicle-picker-odo-row {
+    width: 100%;
+  }
+  
+  .vehicle-picker-odo-input {
+    flex: 1;
+    min-width: 80px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE (with drawer nav)
+   ============================================ */
+@media (max-width: 768px) {
+  /* Header adjustments for mobile with hamburger */
+  header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .title-block {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .title-block h1 {
+    font-size: 1.15rem;
+  }
+  
+  .title-block .tagline {
+    display: none;
+  }
+  
+  /* Top controls become just the hamburger on mobile */
+  .top-controls {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: auto;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 650px) {
+  body {
+    padding: 12px;
+  }
+  
+  .app {
+    padding: 16px;
+    border-radius: 18px;
+  }
+  
+  header {
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+  
+  .title-block h1 {
+    font-size: 1.1rem;
+  }
+  
+  /* Logo adjustments */
+  .app-logo {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .logo-title-row {
+    gap: 10px;
+  }
+  
+  .card {
+    padding: 14px;
+  }
+  
+  .field-grid,
+  .entry-body-fields,
+  .reminder-body-fields,
+  .entry-view-grid,
+  .settings-intervals-main,
+  .settings-vehicle-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  
+  .button-row {
+    flex-direction: column;
+  }
+  
+  button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .dashboard-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  #toggle-entry-form {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .form-preference-section {
+    justify-content: center;
+  }
+  
+  .stats-row {
+    justify-content: center;
+  }
+  
+  footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - SMALL MOBILE
+   ============================================ */
+@media (max-width: 400px) {
+  body {
+    padding: 3px;
+  }
+  
+  .app {
+    padding: 0px;
+    border-radius: 14px;
+  }
+  
+  .title-block h1 {
+    font-size: 1rem;
+  }
+  
+  .app-logo {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .pill {
+    padding: 3px 8px;
+    font-size: 0.75rem;
+  }
+  
+  .btn-small {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+  
+  .card {
+    padding: 12px;
+  }
+  
+  .card-header h2 {
+    font-size: 1rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - SETTINGS TABS (all sizes)
+   ============================================ */
+@media (max-width: 768px) {
+  .settings-tabs {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .settings-tab-btn {
+    flex: 1 1 auto;
+    min-width: 80px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-tabs {
+    gap: 4px;
+  }
+  
+  .settings-tab-btn {
+    min-width: 70px;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - MODALS
+   ============================================ */
+@media (max-width: 600px) {
+  .modal-overlay {
+    padding: 10px;
+  }
+  
+  .modal-content {
+    padding: var(--gm-space-4);
+    max-height: 90vh;
+  }
+  
+  .modal-header {
+    margin-bottom: var(--gm-space-3);
+    padding-bottom: var(--gm-space-2);
+  }
+  
+  .modal-footer {
+    flex-direction: column;
+  }
+  
+  .modal-footer button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,424 @@
+/**
+ * Garage Maintenance - Google Drive Integration Styles
+ * Theme-aware version using CSS custom properties
+ */
+
+/* ============================================
+   ATTACHMENT UPLOAD AREA (Static HTML version)
+   ============================================ */
+.attachment-upload-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.attachment-upload-area .btn-attachment-gdrive,
+.attachment-upload-area .btn-attachment-local {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: var(--gm-radius);
+  transition: all var(--gm-transition-fast);
+  cursor: pointer;
+}
+
+/* Google Drive Button */
+.btn-attachment-gdrive {
+  background: var(--gm-bg-subtle);
+  border: 1px dashed var(--gm-border);
+  color: var(--gm-text-secondary);
+}
+
+.btn-attachment-gdrive:hover {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: #4285f4;
+  border-style: solid;
+  color: #4285f4;
+}
+
+.btn-attachment-gdrive .bi-google {
+  color: #4285f4;
+}
+
+/* Local Upload Button */
+.btn-attachment-local {
+  background: var(--gm-bg-subtle);
+  border: 1px dashed var(--gm-border);
+  color: var(--gm-text-secondary);
+}
+
+.btn-attachment-local:hover {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: #22c55e;
+  border-style: solid;
+  color: #22c55e;
+}
+
+.btn-attachment-local .bi-upload {
+  color: #22c55e;
+}
+
+/* Upgrade hint */
+.attachment-upgrade-hint {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+}
+
+.attachment-upgrade-hint .upgrade-link {
+  color: var(--gm-accent);
+  text-decoration: underline;
+}
+
+/* ============================================
+   LEGACY: ATTACHMENT UPLOAD CONTAINER (for edit mode)
+   ============================================ */
+.attachment-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.attachment-upload-container .btn-attachment-drive,
+.attachment-upload-container .btn-attachment-local {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: var(--gm-radius);
+  transition: all var(--gm-transition-fast);
+}
+
+/* Google Drive Button */
+.btn-attachment-drive {
+  background: var(--gm-bg-subtle);
+  border: 1px dashed var(--gm-border);
+  color: var(--gm-text-secondary);
+}
+
+.btn-attachment-drive:hover {
+  background: rgba(66, 133, 244, 0.1);
+  border-color: #4285f4;
+  border-style: solid;
+  color: #4285f4;
+}
+
+.btn-attachment-drive .bi-google {
+  color: #4285f4;
+}
+
+/* Local Upload Button */
+.btn-attachment-local {
+  background: var(--gm-bg-subtle);
+  border: 1px dashed var(--gm-border);
+  color: var(--gm-text-secondary);
+}
+
+.btn-attachment-local:hover {
+  background: var(--gm-accent-subtle);
+  border-color: var(--gm-accent);
+  border-style: solid;
+  color: var(--gm-accent);
+}
+
+/* Upgrade Hint */
+.attachment-upgrade-hint {
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  background: var(--gm-bg-subtle);
+  border-radius: var(--gm-radius-sm);
+  text-align: center;
+}
+
+.attachment-upgrade-hint .bi-lock {
+  margin-right: 4px;
+  opacity: 0.7;
+}
+
+.attachment-upgrade-hint .upgrade-link {
+  color: var(--gm-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.attachment-upgrade-hint .upgrade-link:hover {
+  color: var(--gm-accent-hover);
+}
+
+/* File Type Hint */
+.attachment-hint {
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 4px;
+}
+
+/* Limit Reached */
+.attachment-limit-reached {
+  font-size: 0.8rem;
+  padding: 10px;
+  text-align: center;
+  background: var(--gm-bg-subtle);
+  border-radius: var(--gm-radius-sm);
+  border: 1px dashed var(--gm-border);
+}
+
+/* ============================================
+   ATTACHMENT ITEM WITH SOURCE INDICATOR
+   ============================================ */
+
+/* Source icon styling */
+.attachment-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.attachment-name .source-icon {
+  font-size: 0.9em;
+  flex-shrink: 0;
+}
+
+.attachment-name .source-icon.source-gdrive {
+  color: #4285f4;
+}
+
+.attachment-name .source-icon.source-local {
+  color: var(--gm-text-muted);
+}
+
+/* File type icons */
+.attachment-preview .file-icon {
+  font-size: 1.4rem;
+  color: var(--gm-text-muted);
+}
+
+.attachment-preview .bi-file-pdf {
+  color: #dc3545;
+}
+
+.attachment-preview .bi-file-image {
+  color: #28a745;
+}
+
+.attachment-preview .bi-file-word {
+  color: #2b579a;
+}
+
+/* Action buttons */
+.attachment-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.attachment-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0.85rem;
+  background: var(--gm-bg-subtle);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius-sm);
+  color: var(--gm-text-secondary);
+  cursor: pointer;
+  transition: all var(--gm-transition-fast);
+}
+
+.attachment-btn:hover {
+  background: var(--gm-bg-hover);
+  color: var(--gm-text-primary);
+}
+
+.attachment-btn.download:hover {
+  background: var(--gm-accent-subtle);
+  border-color: var(--gm-accent);
+  color: var(--gm-accent);
+}
+
+.attachment-btn.delete {
+  color: var(--gm-error-text);
+}
+
+.attachment-btn.delete:hover {
+  background: var(--gm-error-bg);
+  border-color: var(--gm-error-border);
+}
+
+/* ============================================
+   GOOGLE DRIVE CONNECTION STATUS (Settings)
+   ============================================ */
+.gdrive-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--gm-bg-elevated);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius);
+  margin-bottom: 12px;
+}
+
+.gdrive-status-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gdrive-status-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+.gdrive-status-icon.connected {
+  background: rgba(66, 133, 244, 0.15);
+  color: #4285f4;
+}
+
+.gdrive-status-icon.disconnected {
+  background: var(--gm-bg-subtle);
+  color: var(--gm-text-muted);
+}
+
+.gdrive-status-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gdrive-status-title {
+  font-weight: 500;
+  color: var(--gm-text-primary);
+  font-size: 0.9rem;
+}
+
+.gdrive-status-desc {
+  font-size: 0.75rem;
+  color: var(--gm-text-muted);
+}
+
+.gdrive-status-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-gdrive-connect {
+  background: #4285f4;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--gm-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--gm-transition-fast);
+}
+
+.btn-gdrive-connect:hover {
+  background: #3367d6;
+}
+
+.btn-gdrive-disconnect {
+  background: transparent;
+  color: var(--gm-error-text);
+  border: 1px solid var(--gm-error-border);
+  padding: 8px 16px;
+  border-radius: var(--gm-radius-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--gm-transition-fast);
+}
+
+.btn-gdrive-disconnect:hover {
+  background: var(--gm-error-bg);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+@media (max-width: 480px) {
+  .attachment-upload-container {
+    gap: 6px;
+  }
+  
+  .attachment-upload-container .btn-attachment-drive,
+  .attachment-upload-container .btn-attachment-local {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .gdrive-status {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+  
+  .gdrive-status-info {
+    flex-direction: column;
+  }
+  
+  .gdrive-status-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   SELECTED FILES LIST
+   ============================================ */
+.selected-files-list {
+  font-size: 0.85rem;
+}
+
+.selected-files-list > div {
+  padding: 8px 12px;
+  background: var(--gm-bg-subtle);
+  border-radius: var(--gm-radius);
+  border: 1px solid var(--gm-border);
+}
+
+.selected-files-list .bi-file-earmark {
+  color: var(--gm-accent);
+  margin-right: 4px;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes gdrive-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.gdrive-loading {
+  animation: gdrive-pulse 1.5s ease-in-out infinite;
+}
+
+/* Google Picker Override (if needed) */
+.picker-dialog {
+  z-index: 10000 !important;
+}
+
+.picker-dialog-bg {
+  z-index: 9999 !important;
+}

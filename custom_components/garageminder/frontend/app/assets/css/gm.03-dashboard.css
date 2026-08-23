@@ -1,0 +1,92 @@
+/**
+ * Garage Maintenance - Dashboard layout
+ * Theme-aware version using CSS custom properties
+ */
+
+/* ============================================
+   DASHBOARD LAYOUT WITH SIDEBAR
+   ============================================ */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 1fr var(--sidebar-width);
+  gap: 24px;
+  align-items: start;
+}
+
+.dashboard-main {
+  min-width: 0;
+}
+
+.dashboard-sidebar {
+  position: sticky;
+  top: 20px;
+}
+
+.sidebar-card {
+  height: fit-content;
+}
+
+.sidebar-card .card-header h2 {
+  font-size: 1rem;
+}
+
+.sidebar-footer {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gm-border-light);
+  text-align: center;
+}
+
+.sidebar-view-all {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Dashboard Actions */
+.dashboard-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+#toggle-entry-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  transition: all var(--gm-transition);
+}
+
+#toggle-form-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: transform var(--gm-transition);
+}
+
+#toggle-entry-form.form-open #toggle-form-icon {
+  transform: rotate(45deg);
+}
+
+.dashboard-entry-form {
+  margin-bottom: 20px;
+}
+
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-sidebar {
+    position: static;
+    order: -1;
+  }
+}

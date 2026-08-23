@@ -1,0 +1,104 @@
+log_service:
+  name: Log service
+  description: Record a completed service against a vehicle, exactly as the entry form would.
+  fields:
+    vehicle_id:
+      name: Vehicle ID
+      description: The GarageMinder vehicle id.
+      required: true
+      example: "a1b2c3d4"
+      selector:
+        text:
+    services:
+      name: Services
+      description: One or more service names performed.
+      required: true
+      example: '["Oil change", "Tire rotation"]'
+      selector:
+        object:
+    odometer:
+      name: Odometer
+      description: Mileage at the time of service.
+      selector:
+        number:
+          min: 0
+          max: 2000000
+          mode: box
+    cost:
+      name: Cost
+      description: Total cost for the visit.
+      selector:
+        number:
+          min: 0
+          step: 0.01
+          mode: box
+    notes:
+      name: Notes
+      description: Free text - shop, part numbers, oil weight.
+      selector:
+        text:
+          multiline: true
+    date:
+      name: Date
+      description: Service date. Defaults to today.
+      selector:
+        date:
+
+set_odometer:
+  name: Set odometer
+  description: Update a vehicle's current mileage.
+  fields:
+    vehicle_id:
+      name: Vehicle ID
+      required: true
+      selector:
+        text:
+    odometer:
+      name: Odometer
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 2000000
+          mode: box
+
+add_vehicle:
+  name: Add vehicle
+  description: Create a new vehicle.
+  fields:
+    name:
+      name: Name
+      required: true
+      selector:
+        text:
+    vin:
+      name: VIN
+      selector:
+        text:
+    plate:
+      name: Plate
+      selector:
+        text:
+
+snooze_reminder:
+  name: Snooze reminder
+  description: Push a reminder's next due date out by a number of days.
+  fields:
+    vehicle_id:
+      name: Vehicle ID
+      required: true
+      selector:
+        text:
+    service:
+      name: Service
+      required: true
+      selector:
+        text:
+    days:
+      name: Days
+      default: 7
+      selector:
+        number:
+          min: 1
+          max: 365
+          mode: box

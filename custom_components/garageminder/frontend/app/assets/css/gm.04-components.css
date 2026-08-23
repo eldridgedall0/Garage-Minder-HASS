@@ -1,0 +1,459 @@
+/**
+ * GarageMinder Components
+ * 
+ * FIXES:
+ * - Issue #4: Modal close button uses Bootstrap icon instead of invalid character
+ */
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+/* Base button styles */
+button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gm-space-2);
+  padding: var(--gm-space-2) var(--gm-space-4);
+  font-size: var(--gm-font-size-sm);
+  font-weight: var(--gm-font-weight-medium);
+  border-radius: var(--gm-radius);
+  cursor: pointer;
+  transition: all var(--gm-transition-fast);
+  border: none;
+  text-decoration: none;
+  background-color: var(--gm-btn-secondary-bg);
+  color: var(--gm-btn-secondary-text);
+}
+
+button:hover,
+.btn:hover {
+  background-color: var(--gm-btn-secondary-bg-hover);
+}
+
+/* Primary button */
+.btn-primary {
+  background-color: var(--gm-btn-primary-bg);
+  color: var(--gm-btn-primary-text);
+}
+
+.btn-primary:hover {
+  background-color: var(--gm-btn-primary-bg-hover);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+/* Secondary button */
+.btn-secondary {
+  background-color: var(--gm-btn-secondary-bg);
+  color: var(--gm-btn-secondary-text);
+}
+
+.btn-secondary:hover {
+  background-color: var(--gm-btn-secondary-bg-hover);
+}
+
+/* Ghost button */
+.btn-ghost {
+  background-color: var(--gm-btn-ghost-bg);
+  color: var(--gm-btn-ghost-text);
+  border: 1px solid var(--gm-btn-ghost-border);
+}
+
+.btn-ghost:hover {
+  background-color: var(--gm-btn-ghost-bg-hover);
+  color: var(--gm-btn-ghost-text-hover);
+}
+
+/* Danger button */
+.btn-danger {
+  background-color: var(--gm-btn-danger-bg);
+  color: var(--gm-btn-danger-text);
+}
+
+.btn-danger:hover {
+  background-color: var(--gm-btn-danger-bg-hover);
+}
+
+/* Button sizes */
+.btn-small {
+  padding: var(--gm-space-1) var(--gm-space-3);
+  font-size: var(--gm-font-size-xs);
+}
+
+.btn-large {
+  padding: var(--gm-space-3) var(--gm-space-6);
+  font-size: var(--gm-font-size-base);
+}
+
+/* Button row (for form actions) */
+.button-row {
+  display: flex;
+  gap: var(--gm-space-3);
+  justify-content: flex-end;
+  margin-top: var(--gm-space-4);
+}
+
+/* ========================================
+   FORM COMPONENTS
+   ======================================== */
+
+/* Field grid */
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--gm-space-4);
+}
+
+/* Field wrapper */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gm-space-1);
+}
+
+.field label {
+  color: var(--gm-text-secondary);
+  font-size: var(--gm-font-size-sm);
+  font-weight: var(--gm-font-weight-medium);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+}
+
+/* Input styling (extending base) */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="tel"],
+textarea,
+select {
+  background-color: var(--gm-bg-input);
+  border: 1px solid var(--gm-border-input);
+  color: var(--gm-text-primary);
+  padding: var(--gm-space-2) var(--gm-space-3);
+  border-radius: var(--gm-radius);
+  font-size: var(--gm-font-size-sm);
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* File input */
+input[type="file"] {
+  padding: var(--gm-space-2);
+  background-color: var(--gm-bg-input);
+  border: 1px dashed var(--gm-border-input);
+  border-radius: var(--gm-radius);
+  color: var(--gm-text-secondary);
+  font-size: var(--gm-font-size-sm);
+}
+
+input[type="file"]:hover {
+  border-color: var(--gm-accent);
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--gm-accent);
+  cursor: pointer;
+}
+
+/* ========================================
+   MODALS - Issue #4 FIX
+   ======================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gm-bg-modal-overlay);
+  z-index: var(--gm-z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-content {
+  position: relative;
+  background-color: var(--gm-bg-modal);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius-lg);
+  padding: var(--gm-space-6);
+  max-width: 90vw;
+  max-height: 85vh;
+  overflow-y: auto;
+  z-index: 1;
+  box-shadow: var(--gm-shadow-lg);
+  width: 100%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--gm-space-4);
+  padding-bottom: var(--gm-space-3);
+  border-bottom: 1px solid var(--gm-border);
+}
+
+.modal-header h3 {
+  color: var(--gm-text-primary);
+  margin: 0;
+}
+
+/* ISSUE #4 FIX: Modal close button using CSS content instead of character */
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 0;  /* Hide any text content */
+  color: var(--gm-text-muted);
+  cursor: pointer;
+  padding: var(--gm-space-2);
+  line-height: 1;
+  border-radius: var(--gm-radius);
+  transition: all var(--gm-transition-fast);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Use CSS to draw the X */
+.modal-close::before,
+.modal-close::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 1px;
+}
+
+.modal-close::before {
+  transform: rotate(45deg);
+}
+
+.modal-close::after {
+  transform: rotate(-45deg);
+}
+
+.modal-close:hover {
+  color: var(--gm-text-primary);
+  background: var(--gm-bg-hover);
+}
+
+/* Alternative: If using Bootstrap Icons, use this class */
+.modal-close.bi-x-lg::before,
+.modal-close.bi-x-lg::after {
+  display: none;
+}
+
+.modal-body {
+  color: var(--gm-text-primary);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gm-space-3);
+  margin-top: var(--gm-space-4);
+  padding-top: var(--gm-space-3);
+  border-top: 1px solid var(--gm-border);
+}
+
+/* ========================================
+   DROPDOWNS
+   ======================================== */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--gm-bg-dropdown);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius);
+  box-shadow: var(--gm-shadow);
+  z-index: var(--gm-z-dropdown);
+  min-width: 160px;
+  padding: var(--gm-space-1) 0;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: var(--gm-space-2) var(--gm-space-3);
+  background: none;
+  border: none;
+  text-align: left;
+  color: var(--gm-text-primary);
+  font-size: var(--gm-font-size-sm);
+  cursor: pointer;
+  transition: background-color var(--gm-transition-fast);
+  text-decoration: none !important;
+}
+
+.dropdown-item:hover {
+  background-color: var(--gm-bg-card-hover);
+  text-decoration: none !important;
+}
+
+/* ========================================
+   TOOLTIPS
+   ======================================== */
+.tooltip {
+  position: relative;
+}
+
+.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--gm-space-1) var(--gm-space-2);
+  background-color: var(--gm-bg-tooltip);
+  color: #ffffff;
+  font-size: var(--gm-font-size-xs);
+  border-radius: var(--gm-radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--gm-transition-fast);
+  z-index: var(--gm-z-tooltip);
+}
+
+.tooltip:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ========================================
+   BADGES & TAGS
+   ======================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--gm-space-1) var(--gm-space-2);
+  font-size: var(--gm-font-size-xs);
+  font-weight: var(--gm-font-weight-medium);
+  border-radius: var(--gm-radius-full);
+  background-color: var(--gm-bg-elevated);
+  color: var(--gm-text-secondary);
+}
+
+.badge-success {
+  background-color: var(--gm-success-bg);
+  color: var(--gm-success-text);
+}
+
+.badge-warning {
+  background-color: var(--gm-warning-bg);
+  color: var(--gm-warning-text);
+}
+
+.badge-error {
+  background-color: var(--gm-error-bg);
+  color: var(--gm-error-text);
+}
+
+.badge-info {
+  background-color: var(--gm-info-bg);
+  color: var(--gm-info-text);
+}
+
+/* ========================================
+   ALERTS / BANNERS
+   ======================================== */
+.alert {
+  padding: var(--gm-space-3) var(--gm-space-4);
+  border-radius: var(--gm-radius);
+  margin-bottom: var(--gm-space-4);
+}
+
+.alert-error,
+#db-error-banner {
+  background-color: var(--gm-error-bg);
+  color: var(--gm-error-text);
+  border: 1px solid var(--gm-error);
+}
+
+.alert-warning {
+  background-color: var(--gm-warning-bg);
+  color: var(--gm-warning-text);
+  border: 1px solid var(--gm-warning);
+}
+
+.alert-success {
+  background-color: var(--gm-success-bg);
+  color: var(--gm-success-text);
+  border: 1px solid var(--gm-success);
+}
+
+.alert-info {
+  background-color: var(--gm-info-bg);
+  color: var(--gm-info-text);
+  border: 1px solid var(--gm-info);
+}
+
+/* ========================================
+   SERVICE CHIPS (Checkboxes in forms)
+   ======================================== */
+.service-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--gm-bg-elevated);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius-full);
+  font-size: var(--gm-font-size-sm);
+  color: var(--gm-text-secondary);
+  cursor: pointer;
+  transition: all var(--gm-transition-fast);
+}
+
+.service-chip:hover {
+  border-color: var(--gm-accent-soft);
+  background: var(--gm-bg-hover);
+}
+
+.service-chip.selected {
+  background: var(--gm-accent-subtle);
+  border-color: var(--gm-accent);
+  color: var(--gm-accent);
+}
+
+.service-chip input[type="checkbox"] {
+  margin: 0;
+}
+
+/* ========================================
+   HELPER TEXT
+   ======================================== */
+.settings-help {
+  color: var(--gm-text-muted);
+  font-size: var(--gm-font-size-sm);
+  line-height: var(--gm-line-height-relaxed);
+  margin-bottom: var(--gm-space-3);
+}

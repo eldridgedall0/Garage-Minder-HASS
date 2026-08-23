@@ -1,0 +1,420 @@
+/**
+ * GarageMinder - Mobile & Tablet Design Improvements
+ * File: assets/css/gm.29-mobile-improvements.css
+ * Load after: gm.28-preloader.css
+ *
+ * All rules here are ADDITIVE — they override specific values in existing
+ * files without touching them. Safe to deploy incrementally.
+ *
+ * Breakpoints used:
+ *   ≤1024px  Tablet landscape / small desktop
+ *   ≤900px   Tablet portrait
+ *   ≤768px   Mobile (drawer nav kicks in here — existing)
+ *   ≤650px   Small mobile landscape (existing)
+ *   ≤480px   NEW — modern phone portrait / very small tablet
+ *   ≤400px   Tiny phone (existing)
+ */
+
+
+/* ============================================================
+   1. TABLET SHELL — tighter header/footer padding on tablet
+      gm.02-shell.css uses --gm-space-6 (24px) at all sizes.
+      Step it down at tablet to reclaim horizontal space.
+   ============================================================ */
+@media (max-width: 1024px) {
+  header,
+  footer {
+    padding-left: var(--gm-space-4);
+    padding-right: var(--gm-space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  header,
+  footer {
+    padding-left: var(--gm-space-3);
+    padding-right: var(--gm-space-3);
+  }
+
+  /* Slightly reduce the app container horizontal padding on tablet */
+  .app {
+    padding-left: var(--gm-space-3);
+    padding-right: var(--gm-space-3);
+  }
+}
+
+
+/* ============================================================
+   2. TOUCH TARGETS — enforce 44 × 44 px minimum on all
+      interactive elements that fall short on mobile.
+      Tap area is expanded via padding without changing visuals.
+   ============================================================ */
+@media (max-width: 1024px) {
+
+  /* Nav buttons (gm.02-shell.css — currently ~32px tall) */
+  .nav-btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 44px;
+  }
+
+  /* Modal close button (gm.04-components.css — 32×32) */
+  .modal-close {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Drawer close button (gm.22-mobile-nav.css — 36×36) */
+  .drawer-close {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Entry header rows — easier tap */
+  .entry-header {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    min-height: 48px;
+  }
+
+  /* Settings tab buttons */
+  .settings-tab-btn {
+    min-height: 44px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+
+/* ============================================================
+   3. BUTTON STACKING — fix the blanket width:100% rule in
+      gm.11-responsive.css which makes ALL buttons full-width
+      at ≤650px. Only primary action buttons should stretch;
+      secondary/small buttons should wrap naturally.
+   ============================================================ */
+@media (max-width: 650px) {
+
+  /* Undo the blanket rule from gm.11-responsive.css */
+  button {
+    width: auto;
+  }
+
+  /* Re-apply full-width only where it makes sense */
+  .button-row button,
+  .button-row .btn,
+  .dashboard-actions > button,
+  .dashboard-actions > .btn,
+  #toggle-entry-form,
+  .form-preference-section button,
+  .modal-footer button,
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  /* Button rows: wrap instead of always stacking */
+  .button-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  /* Small utility buttons — never stretch */
+  .btn-small,
+  .entry-body-buttons .btn,
+  .entry-body-buttons button {
+    width: auto !important;
+  }
+
+  /* Icon-only buttons in lists (delete, edit) */
+  .icon-btn,
+  button[title],
+  .entry-body-buttons button {
+    width: auto !important;
+    min-width: 44px;
+  }
+}
+
+
+/* ============================================================
+   4. ENTRY / FORM GRIDS — collapse to 1-column at 480px
+      instead of 600px. Modern phones ≥480px get 2 columns.
+   ============================================================ */
+
+/* Override the 600px collapse from gm.05-entries.css */
+@media (max-width: 600px) {
+  .entry-body-fields,
+  .entry-view-grid {
+    /* Keep 2-col down to 480 — override the 1fr rule */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .entry-body-fields,
+  .entry-view-grid,
+  /* Also collapse these from gm.11-responsive.css */
+  .field-grid,
+  .reminder-body-fields,
+  .settings-intervals-main,
+  .settings-vehicle-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+/* ============================================================
+   5. DASHBOARD SIDEBAR — smoother tablet transition.
+      At 1024px the sidebar jumps to order:-1 (top of page).
+      Give it a subtle visual cue and reduce its max-height.
+   ============================================================ */
+@media (max-width: 1024px) {
+
+  /* Reminder snippet list: shorter on tablet so it doesn't
+     dominate the top of the page when sidebar reorders */
+  .reminder-snippet-list {
+    max-height: 160px;
+  }
+
+  /* Visually de-emphasise the sidebar at this size so
+     the main content reads as the primary area */
+  .dashboard-sidebar {
+    opacity: 0.95;
+  }
+
+  /* Sidebar cards should be more compact horizontally */
+  .sidebar-card {
+    padding: var(--gm-space-3);
+  }
+
+  /* Allow dashboard content gap to tighten */
+  .dashboard-content {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* Give sidebar a thin top border so the content break is clear */
+  .dashboard-sidebar {
+    padding-top: var(--gm-space-3);
+    border-top: 1px solid var(--gm-border-light);
+    opacity: 1;
+  }
+
+  /* Shrink sidebar section title */
+  .sidebar-card .card-header h2 {
+    font-size: 0.9rem;
+  }
+}
+
+
+/* ============================================================
+   6. NEW 480px BREAKPOINT — phones in portrait and small
+      tablets in landscape. Fills the gap between 650px and 400px.
+   ============================================================ */
+@media (max-width: 480px) {
+
+  body {
+    padding: 8px;
+  }
+
+  .app {
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  /* Header: tighter on small phones */
+  header {
+    gap: 10px;
+    padding: 12px;
+    padding-bottom: 12px;
+  }
+
+  /* Slightly smaller logo at 480 (not as aggressive as 400) */
+  .app-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .title-block h1,
+  .app-title {
+    font-size: 1.05rem;
+  }
+
+  /* Cards: tighter padding */
+  .card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .card-header {
+    margin-bottom: var(--gm-space-3);
+  }
+
+  .card-header h2 {
+    font-size: 1rem;
+  }
+
+  /* Stats row: wrap and center on very small screens */
+  .stats-row {
+    justify-content: flex-start;
+    gap: var(--gm-space-2);
+  }
+
+  .pill {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+  }
+
+  /* Footer: stack at 480 not just 650 */
+  footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--gm-space-2);
+    padding: var(--gm-space-3);
+  }
+
+  /* Dashboard actions: full-width stack */
+  .dashboard-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  #toggle-entry-form {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Service tags: slightly smaller */
+  .entry-service-tag,
+  .service-badge {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+  }
+
+  /* Modal: full-width on small phones */
+  .modal-content {
+    max-width: 100%;
+    padding: var(--gm-space-3);
+    border-radius: var(--gm-radius-lg);
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    gap: var(--gm-space-2);
+  }
+
+  .modal-footer button,
+  .modal-footer .btn {
+    width: 100%;
+  }
+}
+
+
+/* ============================================================
+   7. ODOMETER SECTION — keep it accessible in the drawer;
+      hide the desktop odo earlier (at 768 instead of 650)
+      since the drawer odo is the mobile replacement.
+      This prevents an awkward in-between state.
+   ============================================================ */
+@media (max-width: 768px) {
+  /* The desktop vehicle picker's odo section is hidden at 768
+     because the drawer provides this functionality on mobile.
+     Override the 650px hide from gm.02-shell.css. */
+  .vehicle-picker-odo-section {
+    display: none;
+  }
+}
+
+
+/* ============================================================
+   8. SAFE AREA / NOTCH IMPROVEMENTS
+      Add safe-area padding to the bottom of the app container
+      so content doesn't get clipped on notched iPhones.
+   ============================================================ */
+@supports (padding: max(0px)) {
+  .app {
+    padding-bottom: max(var(--gm-space-4), env(safe-area-inset-bottom));
+  }
+
+  footer {
+    padding-bottom: max(var(--gm-space-4), env(safe-area-inset-bottom));
+  }
+}
+
+
+/* ============================================================
+   9. LANDSCAPE PHONE OPTIMIZATION
+      When a phone is in landscape (short viewport, reasonable width),
+      reduce vertical spacing so content isn't cut off.
+   ============================================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+
+  header {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .app-logo {
+    width: 30px;
+    height: 30px;
+  }
+
+  .title-block h1 {
+    font-size: 1rem;
+  }
+
+  .card {
+    padding: 10px 12px;
+    margin-bottom: var(--gm-space-3);
+  }
+
+  /* Reduce tall empty states / loading areas */
+  .entry-empty {
+    padding: 16px 12px;
+  }
+}
+
+
+/* ============================================================
+   10. TABLET LANDSCAPE — 768px < screen ≤ 1024px
+       The nav is still shown (desktop mode) but the layout
+       has limited space. Tighten things up.
+   ============================================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Nav buttons: smaller text, keep touch target via min-height */
+  .nav-btn {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+
+  /* Vehicle picker: tighter */
+  .vehicle-picker {
+    gap: 8px;
+    padding: 6px 10px;
+  }
+
+  .vehicle-picker select {
+    min-width: 140px;
+    font-size: 0.8rem;
+  }
+
+  .vehicle-picker-odo-input {
+    width: 74px;
+  }
+
+  /* Header: allow items to wrap before overflowing */
+  header {
+    gap: var(--gm-space-3);
+  }
+
+  .top-controls {
+    gap: var(--gm-space-2);
+  }
+}

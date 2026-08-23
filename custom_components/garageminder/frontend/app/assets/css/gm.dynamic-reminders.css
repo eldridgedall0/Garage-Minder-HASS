@@ -1,0 +1,154 @@
+/**
+ * GarageMinder - Dynamic Reminder Auto-Fill Styles
+ * Mobile-compatible indicator and tooltip
+ */
+
+/* Auto-fill indicator container */
+.reminder-autofill-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Icon */
+.reminder-autofill-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  color: #6b7280;
+  background: #f3f4f6;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.reminder-autofill-icon:hover {
+  color: #3b82f6;
+  background: #dbeafe;
+}
+
+.reminder-autofill-icon:active {
+  transform: scale(0.95);
+}
+
+/* Tooltip */
+.reminder-autofill-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  max-width: 280px;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #1f2937;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  z-index: 1000;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.reminder-autofill-tooltip.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Arrow pointing down */
+.reminder-autofill-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid white;
+}
+
+.reminder-autofill-tooltip::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #e5e7eb;
+  margin-top: -1px;
+}
+
+/* Desktop: Show tooltip on hover */
+@media (hover: hover) and (pointer: fine) {
+  .reminder-autofill-indicator:hover .reminder-autofill-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: none;
+  }
+}
+
+/* Mobile: Larger touch target */
+@media (max-width: 768px) {
+  .reminder-autofill-indicator {
+    /* Increase touch target size */
+    padding: 8px;
+    margin: -8px;
+  }
+  
+  .reminder-autofill-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+  
+  .reminder-autofill-tooltip {
+    /* Better mobile positioning */
+    right: -8px;
+    max-width: 240px;
+  }
+}
+
+/* Dark mode support (if you have dark mode) */
+@media (prefers-color-scheme: dark) {
+  .reminder-autofill-icon {
+    color: #9ca3af;
+    background: #374151;
+  }
+  
+  .reminder-autofill-icon:hover {
+    color: #60a5fa;
+    background: #1e3a8a;
+  }
+  
+  .reminder-autofill-tooltip {
+    color: #f3f4f6;
+    background: #1f2937;
+    border-color: #374151;
+  }
+  
+  .reminder-autofill-tooltip::after {
+    border-top-color: #1f2937;
+  }
+  
+  .reminder-autofill-tooltip::before {
+    border-top-color: #374151;
+  }
+}
+
+/* Ensure field container has position: relative */
+.field {
+  position: relative;
+}

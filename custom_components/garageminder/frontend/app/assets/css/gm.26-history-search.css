@@ -1,0 +1,190 @@
+/**
+ * GarageMinder - Service History Search Filter Styles
+ * Clean, minimal search bar UI
+ */
+
+/* Search Container */
+.history-search-container {
+  margin-bottom: 16px;
+  padding: 0 2px;
+}
+
+/* Search Input Wrapper */
+.history-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Search Icon */
+.history-search-icon {
+  position: absolute;
+  left: 12px;
+  font-size: 0.9rem;
+  color: var(--gm-text-secondary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Search Input Field */
+.history-search-input {
+  width: 100%;
+  padding: 10px 40px 10px 42px !important;
+  font-size: 0.9rem;
+  font-family: inherit;
+  border-radius: 10px;
+  background: var(--gm-bg-input);
+  border: 1px solid var(--gm-border-input);
+  color: var(--gm-text-primary);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.history-search-input::placeholder {
+  color: var(--gm-text-tertiary);
+}
+
+.history-search-input:focus {
+  border-color: var(--gm-accent);
+  background: var(--gm-bg-secondary);
+  box-shadow: 0 0 0 3px var(--gm-accent-alpha);
+}
+
+/* Clear Button */
+.history-search-clear {
+  position: absolute;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--gm-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.history-search-clear:hover {
+  background: var(--gm-bg-hover);
+  color: var(--gm-text-primary);
+}
+
+.history-search-clear:active {
+  transform: scale(0.95);
+}
+
+/* Search Results Count */
+.history-search-count {
+  display: none;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  color: var(--gm-text-secondary);
+  background: var(--gm-bg-secondary);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.history-search-count strong {
+  color: var(--gm-accent);
+  font-weight: 600;
+}
+
+/* No Results Message */
+.history-search-no-results {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--gm-text-secondary);
+}
+
+.history-search-no-results i {
+  display: block;
+  font-size: 3rem;
+  margin-bottom: 12px;
+  opacity: 0.3;
+}
+
+.history-search-no-results p {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+}
+
+.history-search-no-results .search-term {
+  color: var(--gm-text-primary);
+  font-weight: 600;
+  font-family: monospace;
+  background: var(--gm-bg-secondary);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .history-search-input {
+    padding: 9px 36px 9px 38px;
+    font-size: 0.85rem;
+  }
+  
+  .history-search-icon {
+    left: 10px;
+    font-size: 0.85rem;
+  }
+  
+  .history-search-clear {
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    font-size: 0.9rem;
+  }
+  
+  .history-search-container {
+    margin-bottom: 12px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .history-search-input {
+    padding: 8px 34px 8px 36px !important;
+    font-size: 0.8rem;
+  }
+  
+  .history-search-count {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] .history-search-input {
+  background: var(--gm-bg-input);
+  border-color: var(--gm-border-input);
+}
+
+[data-theme="dark"] .history-search-input:focus {
+  background: var(--gm-bg-secondary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* Animation for count appearance */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.history-search-count {
+  animation: fadeInDown 0.3s ease;
+}

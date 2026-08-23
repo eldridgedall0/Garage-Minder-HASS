@@ -1,0 +1,60 @@
+/**
+ * Garage Maintenance - Scrollbar Styles
+ * Theme-aware version using CSS custom properties
+ */
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gm-scrollbar-track);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gm-scrollbar-thumb);
+  border-radius: 5px;
+  border: 2px solid var(--gm-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gm-scrollbar-thumb-hover);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gm-scrollbar-thumb) var(--gm-scrollbar-track);
+}
+
+/* Thin scrollbar for lists and containers */
+.entry-list::-webkit-scrollbar,
+.reminders-list::-webkit-scrollbar,
+.reminder-snippet-list::-webkit-scrollbar,
+.settings-list::-webkit-scrollbar,
+.recall-modal-body::-webkit-scrollbar,
+.service-selector-list::-webkit-scrollbar,
+.template-services-list-container::-webkit-scrollbar,
+.recent-activity-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.entry-list::-webkit-scrollbar-thumb,
+.reminders-list::-webkit-scrollbar-thumb,
+.reminder-snippet-list::-webkit-scrollbar-thumb,
+.settings-list::-webkit-scrollbar-thumb,
+.recall-modal-body::-webkit-scrollbar-thumb,
+.service-selector-list::-webkit-scrollbar-thumb,
+.template-services-list-container::-webkit-scrollbar-thumb,
+.recent-activity-list::-webkit-scrollbar-thumb {
+  border: none;
+  border-radius: 3px;
+}
+
+/* Corner styling */
+::-webkit-scrollbar-corner {
+  background: var(--gm-scrollbar-track);
+}

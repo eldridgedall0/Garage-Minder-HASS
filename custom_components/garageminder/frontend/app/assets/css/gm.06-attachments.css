@@ -1,0 +1,143 @@
+/**
+ * Garage Maintenance - Attachments
+ * Theme-aware version using CSS custom properties
+ */
+
+/* ============================================
+   ATTACHMENTS
+   ============================================ */
+.attachments-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.8rem;
+}
+
+.attachment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--gm-border);
+  background: var(--gm-bg-elevated);
+  transition: all var(--gm-transition-fast);
+}
+
+.attachment-item:hover {
+  border-color: var(--gm-accent-soft);
+  background: var(--gm-bg-hover);
+}
+
+.attachment-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.attachment-name {
+  color: var(--gm-text-primary);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.attachment-size {
+  font-size: 0.7rem;
+  color: var(--gm-text-muted);
+}
+
+.attachment-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.attachment-btn {
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  background: var(--gm-bg-subtle);
+  border: 1px solid var(--gm-border);
+  border-radius: var(--gm-radius-sm);
+  color: var(--gm-text-secondary);
+  cursor: pointer;
+  transition: all var(--gm-transition-fast);
+}
+
+.attachment-btn:hover {
+  background: var(--gm-bg-hover);
+  color: var(--gm-text-primary);
+}
+
+.attachment-btn.delete {
+  color: var(--gm-error-text);
+}
+
+.attachment-btn.delete:hover {
+  background: var(--gm-error-bg);
+}
+
+/* Attachment upload area */
+.attachment-upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: 2px dashed var(--gm-border);
+  border-radius: var(--gm-radius);
+  background: var(--gm-bg-subtle);
+  cursor: pointer;
+  transition: all var(--gm-transition-fast);
+}
+
+.attachment-upload-area:hover {
+  border-color: var(--gm-accent);
+  background: var(--gm-accent-subtle);
+}
+
+.attachment-upload-area.drag-over {
+  border-color: var(--gm-accent);
+  background: var(--gm-accent-muted);
+}
+
+.attachment-upload-icon {
+  font-size: 1.5rem;
+  color: var(--gm-text-muted);
+}
+
+.attachment-upload-text {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+  text-align: center;
+}
+
+/* Attachment preview */
+.attachment-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--gm-radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--gm-bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.attachment-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.attachment-preview .file-icon {
+  font-size: 1.2rem;
+  color: var(--gm-text-muted);
+}

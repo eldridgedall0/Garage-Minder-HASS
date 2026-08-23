@@ -1,0 +1,201 @@
+/**
+ * Garage Maintenance - Reminders (sidebar snippets + full list)
+ * Theme-aware version using CSS custom properties
+ */
+
+/* ============================================
+   REMINDER SNIPPET LIST (Sidebar)
+   ============================================ */
+.reminder-snippet-list {
+  margin-top: 8px;
+  border-radius: var(--gm-radius-lg);
+  border: 1px solid var(--gm-border);
+  background: var(--gm-bg-elevated);
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.reminder-snippet-empty {
+  font-size: 0.85rem;
+  color: var(--gm-text-muted);
+  padding: 24px 12px;
+  text-align: center;
+}
+
+.reminder-snippet-item {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--gm-border);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  font-size: 0.85rem;
+  transition: background var(--gm-transition-fast);
+}
+
+.reminder-snippet-item:last-child {
+  border-bottom: none;
+}
+
+.reminder-snippet-item:hover {
+  background: var(--gm-bg-hover);
+}
+
+.reminder-snippet-item > div:first-child {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ============================================
+   REMINDER STATUS PILLS
+   ============================================ */
+/* Default styles (for Reminders page) */
+.reminder-status-pill {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: var(--gm-radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Sidebar-specific styles (dashboard only) */
+.reminder-snippet-item .reminder-status-pill {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 6px 12px;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.reminder-status-pill span.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--gm-radius-full);
+  background: var(--gm-success);
+}
+
+.reminder-status-pill.ok {
+  background: var(--gm-success-bg);
+  color: var(--gm-success-text);
+}
+
+.reminder-status-pill.upcoming {
+  background: var(--gm-warning-bg);
+  color: var(--gm-warning-text);
+}
+
+.reminder-status-pill.upcoming span.dot {
+  background: var(--gm-warning);
+}
+
+.reminder-status-pill.overdue {
+  background: var(--gm-error-bg);
+  color: var(--gm-error-text);
+}
+
+.reminder-status-pill.overdue span.dot {
+  background: var(--gm-error);
+}
+
+/* ============================================
+   REMINDERS LIST (Full View)
+   ============================================ */
+.reminders-list {
+  border-radius: var(--gm-radius-lg);
+  border: 1px solid var(--gm-border);
+  background: var(--gm-bg-elevated);
+}
+
+.reminder-card {
+  border-bottom: 1px solid var(--gm-border-subtle);
+}
+
+.reminder-card:last-child {
+  border-bottom: none;
+}
+
+.reminder-header {
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  align-items: center;
+  transition: background var(--gm-transition-fast);
+}
+
+.reminder-header:hover {
+  background: var(--gm-bg-hover);
+}
+
+.reminder-main {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.reminder-title {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--gm-text-primary);
+}
+
+.reminder-meta {
+  font-size: 0.8rem;
+  color: var(--gm-text-muted);
+}
+
+.reminder-body {
+  display: none;
+  padding: 0 14px 14px;
+}
+
+.reminder-body-inner {
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: var(--gm-radius);
+  border: 1px solid var(--gm-border-subtle);
+  background: var(--gm-bg-subtle);
+}
+
+.reminder-body-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.reminder-body-notes {
+  margin-top: 8px;
+}
+
+.reminder-body-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.reminder-copy-panel {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--gm-border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.reminder-copy-panel select {
+  max-width: 200px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .reminder-body-fields {
+    grid-template-columns: 1fr;
+  }
+}
