@@ -1,6 +1,6 @@
 # GarageMinder for Home Assistant
 
-[![Validate](https://github.com/eldridgedall0/garageminder-hass/actions/workflows/validate.yml/badge.svg)](https://github.com/eldridgedall0/garageminder-hass/actions/workflows/validate.yml)
+[![Validate](https://github.com/eldridgedall0/Garage-Minder-HASS/actions/workflows/validate.yml/badge.svg)](https://github.com/eldridgedall0/Garage-Minder-HASS/actions/workflows/validate.yml)
 [![hacs](https://img.shields.io/badge/HACS-custom-41BDF5.svg)](https://hacs.xyz)
 [![licence](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 
@@ -58,10 +58,10 @@ download.
 
 ### Via HACS (recommended)
 
-[![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=eldridgedall0&repository=garageminder-hass&category=integration)
+[![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=eldridgedall0&repository=Garage-Minder-HASS&category=integration)
 
 Or by hand: **HACS → ⋮ → Custom repositories →** add
-`https://github.com/eldridgedall0/garageminder-hass` with category
+`https://github.com/eldridgedall0/Garage-Minder-HASS` with category
 **Integration**, then install it.
 
 Restart Home Assistant, then **Settings → Devices & Services → Add
@@ -72,7 +72,7 @@ Updates arrive in HACS like any other integration.
 ### Manually
 
 Download `garageminder.zip` from the
-[latest release](https://github.com/eldridgedall0/garageminder-hass/releases/latest)
+[latest release](https://github.com/eldridgedall0/Garage-Minder-HASS/releases/latest)
 and unpack it into your config directory:
 
 ```bash

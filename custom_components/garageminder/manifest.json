@@ -4,10 +4,10 @@
   "codeowners": ["@eldridgedall0"],
   "config_flow": true,
   "dependencies": ["http", "frontend", "websocket_api"],
-  "documentation": "https://github.com/eldridgedall0/garageminder-hass",
+  "documentation": "https://github.com/eldridgedall0/Garage-Minder-HASS",
   "integration_type": "service",
   "iot_class": "local_push",
-  "issue_tracker": "https://github.com/eldridgedall0/garageminder-hass/issues",
+  "issue_tracker": "https://github.com/eldridgedall0/Garage-Minder-HASS/issues",
   "requirements": [],
   "version": "0.1.0"
 }
