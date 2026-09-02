@@ -4,11 +4,14 @@
   /* Mimic Home Assistant: the panel is dropped into a plain container that
      does NOT give its child a height. This is what broke it in HA and what
      the old stub harness hid by hard-coding height:100vh on the iframe. */
-  html,body{margin:0;background:#222}
-  #panel-container{display:block}
+  html,body{margin:0;background:#222;height:100%}
+  /* Reproduce Home Assistant's wrapper: <ha-panel-custom> is display:block
+     with no height of its own, sitting inside the main content area. */
+  #content{display:block}
+  ha-panel-custom{display:block}
 </style>
 </head><body>
-<div id="panel-container"></div>
+<div id="content"><ha-panel-custom></ha-panel-custom></div>
 <script>
 const DATA = {
   vehicles: [{id:"v1", name:"F-150", make:"Ford", model:"F-150", year:2019, currentOdo:84500}],
@@ -49,7 +52,7 @@ window.__fakeHass = {
   const el = document.createElement("garageminder-panel");
   el.hass = window.__fakeHass;      // HA sets .hass before connecting
   el.narrow = false; el.route = {}; el.panel = {};
-  document.getElementById("panel-container").appendChild(el);
+  document.querySelector("ha-panel-custom").appendChild(el);
   window.__panelEl = el;
 </script>
 </body></html>

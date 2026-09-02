@@ -33,9 +33,12 @@ await page.waitForTimeout(3000);
 
 const box = await page.evaluate(() => {
   const el = window.__panelEl;
+  const wrapper = document.querySelector('ha-panel-custom');
   const host = el.getBoundingClientRect();
   const iframe = el.shadowRoot.querySelector('iframe').getBoundingClientRect();
-  return { hostH: Math.round(host.height), hostW: Math.round(host.width),
+  return { wrapperDisplay: getComputedStyle(wrapper).display,
+           wrapperH: Math.round(wrapper.getBoundingClientRect().height),
+           hostH: Math.round(host.height), hostW: Math.round(host.width),
            iframeH: Math.round(iframe.height), iframeW: Math.round(iframe.width),
            bridge: typeof window.__gmBridge };
 });

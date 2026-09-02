@@ -76,10 +76,47 @@ class GarageMinderPanel extends HTMLElement {
 
     this.shadowRoot.append(style, iframe);
     this._iframe = iframe;
+
+    this._releaseParentLayout();
   }
 
   disconnectedCallback() {
     delete window.__gmBridge;
+    this._restoreParentLayout();
+  }
+
+  /**
+   * Home Assistant's <ha-panel-custom> is `display: block` with no height of
+   * its own, which clips the app. Removing that declaration fixes it — but
+   * ha-panel-custom is compiled into the frontend package, so editing it
+   * there is undone by the next HA update, and it is shared with every other
+   * custom panel (HACS, Browser Mod, ...).
+   *
+   * So we neutralise it on OUR host only, at runtime, and put it back when
+   * the panel is torn down. `revert` drops HA's declaration and falls back to
+   * the browser default rather than inventing a value of our own.
+   */
+  _releaseParentLayout() {
+    const parent = this.parentElement || this.getRootNode().host;
+    if (!parent || parent.tagName !== "HA-PANEL-CUSTOM") return;
+
+    this._parentDisplay = parent.style.display;
+    parent.style.display = "revert";
+
+    // Safety net: if the browser does not honour `revert` here, or the result
+    // still leaves us with no usable height, fall back to taking the box out
+    // of the layout entirely.
+    requestAnimationFrame(() => {
+      if (parent.getBoundingClientRect().height < 200) {
+        parent.style.display = "contents";
+      }
+    });
+  }
+
+  _restoreParentLayout() {
+    const parent = this.parentElement || this.getRootNode().host;
+    if (!parent || parent.tagName !== "HA-PANEL-CUSTOM") return;
+    parent.style.display = this._parentDisplay || "";
   }
 
   _buildBridge() {
