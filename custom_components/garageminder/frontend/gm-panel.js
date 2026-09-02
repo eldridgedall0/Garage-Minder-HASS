@@ -48,8 +48,17 @@ class GarageMinderPanel extends HTMLElement {
     if (this._iframe) return;
 
     const style = document.createElement("style");
+    // height:100% here would resolve against a parent that does not set one,
+    // collapsing the host to zero and rendering a blank panel with no error
+    // anywhere. Custom panels own the whole view area (there is no HA toolbar
+    // above them), so pin to the viewport and let the iframe fill the host.
     style.textContent = `
-      :host { display: block; height: 100%; }
+      :host {
+        display: block;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+      }
       iframe {
         border: 0;
         width: 100%;

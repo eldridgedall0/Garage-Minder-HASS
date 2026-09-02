@@ -123,6 +123,18 @@ They run the integration inside a real Home Assistant: setup, entity
 creation, the ported reminder maths, the websocket load/save round trip,
 optimistic-locking conflicts, and the to-do → service-entry path.
 
+### Panel smoke test
+
+```bash
+cd tools/panel-smoke && npm install && node run.mjs
+```
+
+It mounts the real `gm-panel.js` the way Home Assistant does — into a
+container that gives its child no height — and asserts the panel has a
+usable height and the app renders inside it. That second check exists
+because `height: 100%` on `:host` silently collapsed the panel to 150px in
+Home Assistant, with no error in any log.
+
 ---
 
 ## What you get that the web app cannot do

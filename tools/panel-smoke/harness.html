@@ -1,0 +1,55 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>real panel harness</title>
+<style>
+  /* Mimic Home Assistant: the panel is dropped into a plain container that
+     does NOT give its child a height. This is what broke it in HA and what
+     the old stub harness hid by hard-coding height:100vh on the iframe. */
+  html,body{margin:0;background:#222}
+  #panel-container{display:block}
+</style>
+</head><body>
+<div id="panel-container"></div>
+<script>
+const DATA = {
+  vehicles: [{id:"v1", name:"F-150", make:"Ford", model:"F-150", year:2019, currentOdo:84500}],
+  serviceTypes: [{name:"Oil change", intervalMiles:5000, intervalMonths:6}],
+  entries: [{id:"e1", vehicleId:"v1", date:"2026-03-02", odo:80000,
+             services:[{name:"Oil change", cost:62.5}], cost:5}],
+  reminders: [{vehicleId:"v1", service:"Oil change", intervalMiles:5000, baseOdo:80000}],
+  vehicleIntervals:{}, entryTemplates:[], attachments:{},
+  settings:{siteTitle:"GarageMinder", unit:"mi", timezone:null, keepFormOpen:false,
+            upcomingThresholdDays:14, upcomingThresholdMiles:500,
+            overdueThresholdDays:0, overdueThresholdMiles:0, avgDailyMiles:40},
+  activeVehicleId:"v1"
+};
+// A stand-in for HA's `hass` object — the real gm-panel.js builds the bridge from it.
+window.__fakeHass = {
+  connection: { sendMessagePromise: (msg) => {
+    if (msg.type === "garageminder/load")
+      return Promise.resolve({data: JSON.parse(JSON.stringify(DATA)), data_version:"v1tok"});
+    if (msg.type === "garageminder/config")
+      return Promise.resolve({appName:"GarageMinder", appTagline:"Vehicle maintenance, tracked.",
+        unit:"mi", maxAttachments:10, maxAttachmentSizeMB:10,
+        user:{id:"u1",name:"Ken",is_admin:true}, isHomeAssistant:true});
+    if (msg.type === "garageminder/save") return Promise.resolve({data_version:"tok2"});
+    return Promise.reject(new Error("unknown ws "+msg.type));
+  }},
+  callWS: (msg) => window.__fakeHass.connection.sendMessagePromise(msg),
+  callService: () => Promise.resolve(),
+  auth: { data: { access_token: "fake" } },
+  user: { id:"u1", name:"Ken", is_admin:true },
+  themes: { darkMode: true },
+  language: "en",
+  config: { currency: "USD" },
+};
+</script>
+<script type="module">
+  // Load the REAL panel module exactly as Home Assistant does.
+  await import("/gm-panel.js");
+  const el = document.createElement("garageminder-panel");
+  el.hass = window.__fakeHass;      // HA sets .hass before connecting
+  el.narrow = false; el.route = {}; el.panel = {};
+  document.getElementById("panel-container").appendChild(el);
+  window.__panelEl = el;
+</script>
+</body></html>

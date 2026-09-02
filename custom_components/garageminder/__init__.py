@@ -131,6 +131,11 @@ async def _async_register_frontend(hass: HomeAssistant) -> None:
         return
 
     root = Path(__file__).parent / "frontend"
+
+    # A missing bundle produces a blank panel and NOTHING in the log, which is
+    # miserable to debug remotely. Check it up front and say so loudly.
+    await hass.async_add_executor_job(_check_bundle, root)
+
     await hass.http.async_register_static_paths(
         [StaticPathConfig(STATIC_URL, str(root), cache_headers=False)]
     )
@@ -150,6 +155,44 @@ async def _async_register_frontend(hass: HomeAssistant) -> None:
                 "trust_external": False,
             }
         },
+    )
+
+
+def _check_bundle(root: Path) -> None:
+    """Log whether the frontend bundle actually arrived on disk.
+
+    HACS extracts the repository subtree, so a partial download or a build
+    that was never run both end the same way: a sidebar entry that opens to
+    nothing. This turns that into one legible log line.
+    """
+    required = {
+        "panel": root / "gm-panel.js",
+        "boot": root / "gm-boot.js",
+        "compat": root / "gm-compat.js",
+        "api": root / "gm.api.ha.js",
+        "index": root / "app" / "index.html",
+        "jquery": root / "app" / "vendor" / "jquery.min.js",
+    }
+    missing = [name for name, path in required.items() if not path.is_file()]
+
+    if missing:
+        _LOGGER.error(
+            "GarageMinder frontend bundle is incomplete at %s — missing: %s. "
+            "The sidebar panel will be blank. Re-download the integration in "
+            "HACS, or run tools/build_frontend.py and copy the frontend "
+            "directory into place",
+            root,
+            ", ".join(missing),
+        )
+        return
+
+    app_files = sum(1 for path in (root / "app").rglob("*") if path.is_file())
+    _LOGGER.info(
+        "GarageMinder frontend bundle OK at %s (%s files under app/), "
+        "panel served from %s",
+        root,
+        app_files,
+        STATIC_URL,
     )
 
 
