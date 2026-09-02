@@ -15,5 +15,5 @@
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/eldridgedall0/Garage-Minder-HASS/issues",
   "requirements": [],
-  "version": "0.1.2"
+  "version": "0.1.3"
 }

@@ -91,14 +91,7 @@ $(function() {
       
       $btn.html("⏳ Downloading...");
       
-      const downloadUrl = 'backup-create.php?download=1&t=' + Date.now();
-      
-      const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = 'garage_maintenance_backup_' + new Date().toISOString().split('T')[0] + '.json';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      await gmDownloadBackup();
       
       let message = "✓ Backup downloaded! (" + checkResult.size_formatted + ")";
       if (checkResult.attachment_count > 0) {

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import logging
 import mimetypes
+import re
 import uuid
 from pathlib import Path
 from typing import Any
@@ -33,6 +34,9 @@ ALLOWED_SUFFIXES = {
     ".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png", ".gif", ".webp", ".heic",
 }
 MAX_BYTES = MAX_ATTACHMENT_MB * 1024 * 1024
+
+# Client-supplied attachment ids become filenames, so keep them boring.
+_SAFE_ID = re.compile(r"[A-Za-z0-9_-]{1,64}")
 
 
 @callback
@@ -76,7 +80,14 @@ class AttachmentUploadView(HomeAssistantView):
         if suffix not in ALLOWED_SUFFIXES:
             return self.json_message(f"File type {suffix or '?'} is not allowed", 400)
 
-        attachment_id = uuid.uuid4().hex
+        # A restore replays attachments that already have ids, and the entries
+        # in the dataset still reference them. Honour a supplied id so those
+        # references keep resolving; otherwise mint a fresh one.
+        supplied = request.query.get("id", "")
+        if supplied and _SAFE_ID.fullmatch(supplied):
+            attachment_id = supplied
+        else:
+            attachment_id = uuid.uuid4().hex
         target = _storage_dir(hass) / f"{attachment_id}{suffix}"
 
         size = 0

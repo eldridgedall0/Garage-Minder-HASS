@@ -109,6 +109,20 @@ PATCHES: list[tuple[str, str, str]] = [
         "'\\\\u2018': \"'\",\n    '\\\\u2019': \"'\",",
     ),
     (
+        # The full-backup download was an <a href> to backup-create.php, which
+        # the fetch shim cannot intercept. gmDownloadBackup() assembles the
+        # same JSON in the browser and hands over a Blob instead.
+        "assets/js/gm.handlers.js",
+        r"const downloadUrl = 'backup-create\.php\?download=1&t=' \+ Date\.now\(\);\s*"
+        r"const link = document\.createElement\('a'\);\s*"
+        r"link\.href = downloadUrl;\s*"
+        r"link\.download = 'garage_maintenance_backup_' \+ new Date\(\)\.toISOString\(\)\.split\('T'\)\[0\] \+ '\.json';\s*"
+        r"document\.body\.appendChild\(link\);\s*"
+        r"link\.click\(\);\s*"
+        r"document\.body\.removeChild\(link\);",
+        "await gmDownloadBackup();",
+    ),
+    (
         "assets/js/gm.render.settings.js",
         r'const photoUrl = "download\.php\?type=vehicle&id=" \+ encodeURIComponent\(vehicle\.id\);\s*'
         r"\$container\.append\(\s*"
