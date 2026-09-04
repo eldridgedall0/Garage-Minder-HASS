@@ -928,11 +928,17 @@ function renderSettings() {
 
 function renderReminderServiceSelect() {
   const $sel = $("#rem-new-service");
+  const currentVal = $sel.val();
   $sel.empty();
   $sel.append($("<option>").val("").text("Select service template (optional)"));
   (data.serviceTypes || []).forEach(st => {
     $sel.append($("<option>").val(st.name).text(st.name));
   });
+  // Preserve the current selection across re-renders triggered while the
+  // form is open (e.g. switching vehicles, editing another reminder).
+  if (currentVal && (data.serviceTypes || []).some(st => st.name === currentVal)) {
+    $sel.val(currentVal);
+  }
 }
 
 // ============================================

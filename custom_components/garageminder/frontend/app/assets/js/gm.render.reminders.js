@@ -21,6 +21,14 @@ function renderRemindersPage() {
       // Show the add reminder form when a specific vehicle is selected
       $("#reminder-form").closest(".settings-section").show();
 
+      // Keep the "Service name" template dropdown in sync with the service
+      // types defined in Settings. renderRemindersPage() runs on every
+      // router navigation to this page and on every vehicle switch, so this
+      // is the one place that guarantees the list is never stale/empty.
+      if (typeof renderReminderServiceSelect === "function") {
+        renderReminderServiceSelect();
+      }
+
       const vehicle = data.vehicles.find(v => v.id === activeVehicleId) || null;
       const currentOdo = vehicle && vehicle.currentOdo != null ? vehicle.currentOdo : null;
 
