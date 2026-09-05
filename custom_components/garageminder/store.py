@@ -165,6 +165,20 @@ def _normalize(data: dict[str, Any]) -> dict[str, Any]:
     if not isinstance(out.get("attachments"), dict):
         out["attachments"] = {}
 
+    # Mirror api.php's SQL join of entry_attachments onto each entry (see
+    # api.php ~line 328: 'attachments' => $attachments_by_entry[$e['id']] ?? []).
+    # Uploads are recorded in the flat `attachments` bucket (AttachmentUploadView
+    # in http.py, keyed by entry id) rather than nested in each entry, so
+    # without this the SPA -- which only ever reads entry.attachments -- never
+    # sees a file that was successfully uploaded and stored to disk. This runs
+    # on every save (including the async_mutate an upload/delete goes through),
+    # so it stays authoritative: whatever the bucket holds wins over any
+    # `attachments` array a client happened to send on the entry itself.
+    attachments_by_entry = out["attachments"]
+    for entry in out["entries"]:
+        entry_id = str(entry.get("id"))
+        entry["attachments"] = list(attachments_by_entry.get(entry_id) or [])
+
     for vehicle in out["vehicles"]:
         vehicle.setdefault("currentOdo", None)
         vehicle.setdefault("vin", None)

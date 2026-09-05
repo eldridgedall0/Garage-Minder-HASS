@@ -1,6 +1,5 @@
 /**
  * Garage Maintenance - Attachments & Entry Features
- * Updated with Google Drive integration
  * Multi-user ready with proper async save/upload flow
  */
 
@@ -45,16 +44,6 @@ function canUseLocalUpload() {
     return true;
 }
 
-/**
- * Check if user can use Google Drive attachments.
- * Only gated by whether Google Drive is enabled in config.
- */
-function canUseGoogleDrive() {
-    if (typeof GM_CONFIG === 'undefined' || !GM_CONFIG.googleDriveEnabled) {
-        return false;
-    }
-    return true;
-}
 
 /**
  * Get attachment limits.
@@ -151,13 +140,7 @@ async function addOrUpdateEntryFromForm() {
     ? Array.from(fileInput.files) 
     : [];
   const hasFiles = filesToUpload.length > 0;
-  
-  // Check for pending Google Drive files
-  const pendingGDriveFiles = (typeof GDrive !== 'undefined' && GDrive.getPendingFiles) 
-    ? GDrive.getPendingFiles() 
-    : [];
-  const hasGDriveFiles = pendingGDriveFiles.length > 0;
-  
+
   // Debug logging (can be removed after confirming fix works)
   console.log('[Attachments] Files to upload:', filesToUpload.length);
   console.log('[Attachments] Can use local upload:', canUseLocalUpload());
@@ -182,17 +165,7 @@ async function addOrUpdateEntryFromForm() {
     await uploadEntryFiles(payload.id, filesToUpload);
   }
 
-  // Handle pending Google Drive files
-  if (hasGDriveFiles && typeof window.attachGoogleDriveFiles === 'function') {
-    console.log('Attaching pending Google Drive files to entry:', payload.id);
-    await window.attachGoogleDriveFiles(pendingGDriveFiles, payload.id);
-  }
-
   $("#entry-files").val("");
-  // Clear any pending Google Drive files display
-  if (typeof GDrive !== 'undefined' && GDrive.clearPendingFiles) {
-    GDrive.clearPendingFiles();
-  }
   dashboardHistoryPage = 1;
   
   // Reload data from server to get updated attachments
@@ -642,16 +615,15 @@ async function deleteAttachment(attachmentId, entryId) {
 }
 
 /**
- * Render attachment upload area with Google Drive and Local options
+ * Render attachment upload area (local upload only).
  */
 function renderAttachmentUploadArea(entryId, currentCount, maxCount, $container) {
-  const canDrive = canUseGoogleDrive();
   const canLocal = canUseLocalUpload();
   const remainingSlots = Math.max(0, maxCount - currentCount);
-  
+
   // Clear existing
   $container.empty();
-  
+
   if (remainingSlots <= 0) {
     $container.append(
       $('<div>').addClass('attachment-limit-reached text-muted')
@@ -659,28 +631,9 @@ function renderAttachmentUploadArea(entryId, currentCount, maxCount, $container)
     );
     return;
   }
-  
+
   const $uploadArea = $('<div>').addClass('attachment-upload-container');
-  
-  // Google Drive button (available to all users if enabled)
-  if (canDrive && typeof GDrive !== 'undefined') {
-    const $driveBtn = $('<button>')
-      .addClass('btn-ghost btn-attachment-drive')
-      .attr('type', 'button')
-      .html('<i class="bi bi-google"></i> Add from Google Drive')
-      .on('click', function(e) {
-        e.preventDefault();
-        GDrive.openPicker(entryId, async function(files, eId) {
-          await GDrive.attachGoogleDriveFiles ? 
-            window.attachGoogleDriveFiles(files, eId) : 
-            attachGoogleDriveFiles(files, eId);
-        });
-      });
-    
-    $uploadArea.append($driveBtn);
-  }
-  
-  // Local upload (paid users only)
+
   if (canLocal) {
     const $localInput = $('<input>')
       .attr({
@@ -712,58 +665,3 @@ function renderAttachmentUploadArea(entryId, currentCount, maxCount, $container)
   $uploadArea.append($hint);
   $container.append($uploadArea);
 }
-
-// Make function available globally for Google Drive module
-window.attachGoogleDriveFiles = async function(files, entryId) {
-  if (!files || !files.length) return;
-  
-  showToast('Attaching files from Google Drive...');
-  
-  try {
-    const response = await fetch('google-drive-upload.php?action=attach', {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        entry_id: entryId,
-        files: files
-      })
-    });
-    
-    if (response.status === 401) {
-      showToast('Session expired. Please log in again.');
-      window.location.reload();
-      return;
-    }
-    
-    const result = await response.json();
-    
-    if (result.success) {
-      showToast(`${result.count} file(s) attached from Google Drive`);
-      
-      // Update local data
-      const entry = data.entries.find(e => e.id === entryId);
-      if (entry) {
-        if (!entry.attachments) entry.attachments = [];
-        result.attached.forEach(att => {
-          entry.attachments.push(att);
-        });
-      }
-      
-      // Refresh the UI
-      loadData();
-      renderDashboard();
-    } else {
-      showToast('Failed to attach files: ' + (result.message || result.error || 'Unknown error'));
-    }
-    
-    if (result.errors && result.errors.length) {
-      console.warn('Attachment errors:', result.errors);
-    }
-  } catch (error) {
-    console.error('Google Drive attach error:', error);
-    showToast('Failed to attach files: ' + error.message);
-  }
-};

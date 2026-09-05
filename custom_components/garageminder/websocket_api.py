@@ -135,7 +135,6 @@ async def ws_config(
             "appTagline": "Vehicle maintenance, tracked.",
             "appDomain": "garageminder",
             "unit": settings.get("unit", "mi"),
-            "googleDriveEnabled": False,
             "maxAttachments": 10,
             "maxAttachmentSizeMB": 10,
             "user": {"id": user.id, "name": user.name, "is_admin": user.is_admin},

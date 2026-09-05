@@ -64,11 +64,14 @@ VENDOR_SCRIPT_ORDER = [
 #                            a false "you're offline" banner. Every caller
 #                            guards with `typeof gmOffline !== 'undefined'`,
 #                            so dropping it is safe.
-#   gm.features.gdrive.js  - Google OAuth flow with no server to complete it.
+#
+# gm.features.gdrive.js used to be dropped here too (a Google OAuth flow with
+# no server to complete it), but Google Drive support was removed from
+# garageminder itself -- the file, its button, and every call site are gone
+# upstream, so there's nothing left to drop.
 DROP_SCRIPTS = {
     "gm.pwa.js",
     "gm.features.offline.js",
-    "gm.features.gdrive.js",
 }
 
 # download.php was used directly in href/src attributes, which the fetch shim

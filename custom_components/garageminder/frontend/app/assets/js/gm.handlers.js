@@ -265,23 +265,6 @@ $(function() {
     }
   });
   
-  // Google Drive button - opens Google Drive picker
-  $("#btn-gdrive-attach").on("click", function(e) {
-    e.preventDefault();
-    if (typeof GDrive !== 'undefined' && GDrive.openPicker) {
-      const entryId = $("#entry-id").val() || null;
-      GDrive.openPicker(entryId, function(files, eId) {
-        if (typeof window.attachGoogleDriveFiles === 'function') {
-          window.attachGoogleDriveFiles(files, eId);
-        } else {
-          showToast('Google Drive attachment handler not available');
-        }
-      });
-    } else {
-      showToast('Google Drive is not configured. Please set up Google Drive integration.');
-    }
-  });
-
   if (document.getElementById("entry-attach-limit-text")) {
     document.getElementById("entry-attach-limit-text").textContent = getAttachmentHelpText();
   }

@@ -84,3 +84,63 @@ async def test_config_command(hass, entry, hass_ws_client: WebSocketGenerator):
     assert result["isHomeAssistant"] is True
     assert result["unit"] == "mi"
     assert result["user"]["id"]
+
+
+async def test_attachments_join_onto_entries(hass, entry, hass_ws_client: WebSocketGenerator):
+    """Regression test for the missing entry<->attachments join in store.py.
+
+    AttachmentUploadView (http.py) records uploads in the flat
+    ``data["attachments"]`` bucket, keyed by entry id -- mirroring
+    api.php's separate ``entry_attachments`` table -- rather than nesting
+    them directly on the entry. api.php's ``load`` action joins that table
+    onto each entry before returning it (see api.php ~line 328); without
+    the equivalent join in store.py's ``_normalize()``, the SPA (which only
+    ever reads ``entry.attachments``) would show freshly uploaded files as
+    if they never existed, even though they were written to disk and
+    recorded server-side. This is exactly what Ken saw as a green "undefined
+    file(s) uploaded" toast with nothing actually attached.
+    """
+    client = await hass_ws_client(hass)
+
+    await client.send_json({"id": 1, "type": "garageminder/load"})
+    first = (await client.receive_json())["result"]
+    version = first["data_version"]
+    payload = dict(first["data"])
+    payload["vehicles"] = [{"id": "v1", "name": "Civic", "currentOdo": 1000}]
+    payload["entries"] = [
+        {"id": "e1", "vehicleId": "v1", "date": "2026-01-01", "odo": 1000,
+         "services": [{"name": "Oil change", "cost": 50}], "cost": 50,
+         "attachments": []},
+        {"id": "e2", "vehicleId": "v1", "date": "2026-02-01", "odo": 1100,
+         "services": [{"name": "Tire rotation", "cost": 20}], "cost": 20,
+         "attachments": []},
+    ]
+    await client.send_json({"id": 2, "type": "garageminder/save",
+                            "data": payload, "data_version": version})
+    saved = await client.receive_json()
+    assert saved["success"]
+    version = saved["result"]["data_version"]
+
+    await client.send_json({"id": 3, "type": "garageminder/load"})
+    reloaded = (await client.receive_json())["result"]
+
+    # Simulate what AttachmentUploadView.post() does on a real upload: record
+    # the file in the flat bucket, keyed by entry id, and save. It never
+    # touches entry["attachments"] itself -- the join is store.py's job.
+    payload = dict(reloaded["data"])
+    record = {"id": "att_1", "name": "receipt.pdf", "size": 15,
+              "mime": "application/pdf", "stored": "att_1_receipt.pdf"}
+    payload["attachments"] = {"e1": [record]}
+    await client.send_json({"id": 4, "type": "garageminder/save",
+                            "data": payload, "data_version": version})
+    saved = await client.receive_json()
+    assert saved["success"]
+
+    await client.send_json({"id": 5, "type": "garageminder/load"})
+    loaded = (await client.receive_json())["result"]["data"]
+
+    by_id = {e["id"]: e for e in loaded["entries"]}
+    assert by_id["e1"]["attachments"] == [record]
+    # An entry with nothing in the bucket must come back empty, not stale
+    # or missing -- the join is authoritative in both directions.
+    assert by_id["e2"]["attachments"] == []

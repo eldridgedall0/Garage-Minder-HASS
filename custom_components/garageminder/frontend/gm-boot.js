@@ -91,7 +91,6 @@
         appDomain: "garageminder",
         themeMode: bridge.themeMode(),
         profileUrl: "/profile",
-        googleDriveEnabled: false,
       },
       config
     );

@@ -53,17 +53,10 @@ async function addOrUpdateEntryFromForm() {
     ? Array.from(fileInput.files) 
     : [];
   const hasLocalFiles = filesToUpload.length > 0;
-  
-  // Check for pending Google Drive files
-  const pendingGDriveFiles = (typeof GDrive !== 'undefined' && GDrive.getPendingFiles) 
-    ? GDrive.getPendingFiles() 
-    : [];
-  const hasGDriveFiles = pendingGDriveFiles.length > 0;
-  
+
   // Debug logging
   console.log('[Entry] Files to upload:', filesToUpload.length);
-  console.log('[Entry] GDrive files:', pendingGDriveFiles.length);
-  
+
   // Create entry object
   const now = new Date().toISOString();
   const entry = {
@@ -126,20 +119,9 @@ async function addOrUpdateEntryFromForm() {
     await uploadEntryFiles(entry.id, filesToUpload);
   }
 
-  // Handle pending Google Drive files
-  if (hasGDriveFiles && typeof window.attachGoogleDriveFiles === 'function') {
-    console.log('[Entry] Attaching Google Drive files to entry:', entry.id);
-    await window.attachGoogleDriveFiles(pendingGDriveFiles, entry.id);
-  }
-  
   // Clear file input
   $("#entry-files").val("");
-  
-  // Clear any pending Google Drive files display
-  if (typeof GDrive !== 'undefined' && GDrive.clearPendingFiles) {
-    GDrive.clearPendingFiles();
-  }
-  
+
   // Show success notification with reminder info
   showEntrySuccessWithReminderInfo(entry, services);
   

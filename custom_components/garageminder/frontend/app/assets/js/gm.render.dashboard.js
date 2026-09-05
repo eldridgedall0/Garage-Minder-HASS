@@ -1103,12 +1103,7 @@ function renderDashboard() {
 
 function renderNewEntryFormDefaults(editEntry) {
   const today = getTodayIsoInSettingsTz();
-  
-  // Clear any pending Google Drive files
-  if (typeof GDrive !== 'undefined' && GDrive.clearPendingFiles) {
-    GDrive.clearPendingFiles();
-  }
-  
+
   if (!editEntry) {
     $("#entry-id").val("");
     $("#entry-submit-label").text("Save entry");
@@ -1394,7 +1389,7 @@ function renderDashboardHistory() {
       );
     }
 
-    // Attachments - with Google Drive source indicators
+    // Attachments
     const attachments = entry.attachments || [];
     if (attachments.length) {
       const $attSection = $("<div>").addClass("entry-view-field").css("margin-top", "8px").append(
@@ -1404,11 +1399,9 @@ function renderDashboardHistory() {
       attachments.forEach(att => {
         const $item = $("<div>").addClass("attachment-item");
         
-        // Source indicator for Google Drive vs Local
-        const isGoogleDrive = att.source === 'google_drive';
-        const sourceIcon = isGoogleDrive ? 'bi-google' : 'bi-file-earmark';
-        const sourceClass = isGoogleDrive ? 'source-gdrive' : 'source-local';
-        const sourceTitle = isGoogleDrive ? 'Google Drive' : 'Local file';
+        const sourceIcon = 'bi-file-earmark';
+        const sourceClass = 'source-local';
+        const sourceTitle = 'Local file';
         
         const $meta = $("<div>").addClass("attachment-meta").append(
           $("<div>").addClass("attachment-name").append(
@@ -1498,11 +1491,9 @@ function renderDashboardHistory() {
       attachments.forEach(att => {
         const $item = $("<div>").addClass("attachment-item");
         
-        // Source indicator for Google Drive vs Local
-        const isGoogleDrive = att.source === 'google_drive';
-        const sourceIcon = isGoogleDrive ? 'bi-google' : 'bi-file-earmark';
-        const sourceClass = isGoogleDrive ? 'source-gdrive' : 'source-local';
-        const sourceTitle = isGoogleDrive ? 'Google Drive' : 'Local file';
+        const sourceIcon = 'bi-file-earmark';
+        const sourceClass = 'source-local';
+        const sourceTitle = 'Local file';
         
         const $meta = $("<div>").addClass("attachment-meta").append(
           $("<div>").addClass("attachment-name").append(
@@ -1535,37 +1526,9 @@ function renderDashboardHistory() {
       $attSection.append($("<div>").addClass("text-muted").css("font-size","0.75rem").text("No attachments."));
     }
 
-    // Add new attachment area with Google Drive / Local upload buttons (static HTML approach)
+    // Add new attachment area (local upload)
     const $addAttachArea = $("<div>").addClass("field entry-add-attach-area attachment-upload-area").css("margin-top","8px");
-    
-    // Check if Google Drive is enabled
-    const canDrive = (typeof GM_CONFIG !== 'undefined' && GM_CONFIG.googleDriveEnabled === true);
-    
-    // Google Drive button
-    if (canDrive) {
-      const $driveBtn = $("<button>")
-        .addClass("btn-ghost btn-attachment-gdrive")
-        .attr("type", "button")
-        .html('<i class="bi bi-google"></i> Add from Google Drive')
-        .data("entry-id", entry.id)
-        .on("click", function(e) {
-          e.preventDefault();
-          const entryId = $(this).data("entry-id");
-          if (typeof GDrive !== 'undefined' && GDrive.openPicker) {
-            GDrive.openPicker(entryId, function(files, eId) {
-              if (typeof window.attachGoogleDriveFiles === 'function') {
-                window.attachGoogleDriveFiles(files, eId);
-              } else {
-                showToast('Google Drive attachment handler not available');
-              }
-            });
-          } else {
-            showToast('Google Drive is not configured');
-          }
-        });
-      $addAttachArea.append($driveBtn);
-    }
-    
+
     // Container for showing selected files
     const $selectedFiles = $("<div>").addClass("selected-files-list").css({
       "margin-top": "8px",
@@ -1787,7 +1750,7 @@ function renderDashboardRemindersSnippet() {
 }
 
 /**
- * Render attachment upload area with Google Drive and Local options
+ * Render attachment upload area (local upload only).
  * Used by both new entry form and edit entry form
  */
 function renderAttachmentUploadArea(entryId, currentCount, maxCount, $container) {
@@ -1796,21 +1759,20 @@ function renderAttachmentUploadArea(entryId, currentCount, maxCount, $container)
     console.warn('renderAttachmentUploadArea: container not found');
     return;
   }
-  
+
   // Fallback for maxCount if not provided
   if (typeof maxCount !== 'number' || maxCount <= 0) {
     maxCount = 2; // Default
   }
-  
+
   // Upload allowed for all users — no subscription gating
-  const canDrive = (typeof GM_CONFIG !== 'undefined' && GM_CONFIG.googleDriveEnabled === true);
   const canLocal = true;
-  
+
   const remainingSlots = Math.max(0, maxCount - (currentCount || 0));
-  
+
   // Clear container
   $container.empty();
-  
+
   // Check if limit reached
   if (remainingSlots <= 0) {
     $container.append(
@@ -1819,33 +1781,9 @@ function renderAttachmentUploadArea(entryId, currentCount, maxCount, $container)
     );
     return;
   }
-  
+
   const $uploadArea = $('<div>').addClass('attachment-upload-container');
-  
-  // Google Drive button (available to all users if enabled)
-  if (canDrive) {
-    const $driveBtn = $('<button>')
-      .addClass('btn-ghost btn-attachment-drive')
-      .attr('type', 'button')
-      .html('<i class="bi bi-google"></i> Add from Google Drive')
-      .on('click', function(e) {
-        e.preventDefault();
-        if (typeof GDrive !== 'undefined' && GDrive.openPicker) {
-          GDrive.openPicker(entryId, function(files, eId) {
-            if (typeof window.attachGoogleDriveFiles === 'function') {
-              window.attachGoogleDriveFiles(files, eId);
-            } else {
-              showToast('Google Drive attachment not available');
-            }
-          });
-        } else {
-          showToast('Google Drive is loading... Please try again.');
-        }
-      });
-    
-    $uploadArea.append($driveBtn);
-  }
-  
+
   // Local upload button - always show if user can use local uploads
   if (canLocal) {
     const $localInput = $('<input>')
@@ -1869,8 +1807,8 @@ function renderAttachmentUploadArea(entryId, currentCount, maxCount, $container)
     $uploadArea.append($localBtn, $localInput);
   }
   
-  // If neither Google Drive nor Local is available, show a basic file input
-  if (!canDrive && !canLocal) {
+  // If Local upload is unavailable, show a basic file input
+  if (!canLocal) {
     // Fallback - shouldn't normally happen
     $uploadArea.append(
       $('<input>').attr({type:'file', multiple:true}).addClass('entry-attach-files'),

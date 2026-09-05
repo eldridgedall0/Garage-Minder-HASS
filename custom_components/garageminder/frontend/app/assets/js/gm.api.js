@@ -100,7 +100,7 @@ function loadData() {
                 recalls: true, export: true, export_level: 'advanced',
                 export_bulk: true,
                 attachments: true, attachments_per_entry: 5,
-                local_upload: true, gdrive: true,
+                local_upload: true,
                 vehicle_photos: true, templates: true, max_templates: -1
               },
               upgrade_url: '/pricing/'

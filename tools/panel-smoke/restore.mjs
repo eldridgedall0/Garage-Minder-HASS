@@ -11,7 +11,8 @@
  */
 import { chromium } from 'playwright';
 import http from 'node:http'; import fs from 'node:fs'; import path from 'node:path';
-const FRONTEND = '/root/garageminder-hass/custom_components/garageminder/frontend';
+const ROOT = path.resolve(new URL('.', import.meta.url).pathname);
+const FRONTEND = path.resolve(ROOT, '../../custom_components/garageminder/frontend');
 const T={'.html':'text/html','.js':'text/javascript','.css':'text/css','.png':'image/png','.woff':'font/woff','.woff2':'font/woff2','.json':'application/json'};
 
 // Stand-in for the HA websocket + attachment view.
@@ -34,7 +35,7 @@ const server = http.createServer(async (rq, rs) => {
     rs.writeHead(200,{'Content-Type':'application/json'}); rs.end(JSON.stringify(rec)); return;
   }
   if (u.startsWith('/garageminder_static/')) u = u.slice('/garageminder_static'.length);
-  const f = u === '/' ? path.join(process.cwd(),'harness.html') : path.join(FRONTEND, u);
+  const f = u === '/' ? path.join(ROOT,'harness.html') : path.join(FRONTEND, u);
   fs.readFile(f,(e,b)=>{ if(e){rs.writeHead(404);rs.end('404: Not Found');return;}
     rs.writeHead(200,{'Content-Type':T[path.extname(f)]||'application/octet-stream'});rs.end(b);});
 });

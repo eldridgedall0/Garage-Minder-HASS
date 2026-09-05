@@ -86,7 +86,15 @@
         for (const file of files) {
           uploaded.push(await uploadTo(entryId, file));
         }
-        return jsonResponse({ success: true, files: uploaded, attachments: uploaded });
+        // uploadEntryFiles() in gm.features.attachments.js reads result.count
+        // for its toast ("${result.count} file(s) uploaded successfully").
+        // Without it the toast reads "undefined file(s) uploaded".
+        return jsonResponse({
+          success: true,
+          count: uploaded.length,
+          files: uploaded,
+          attachments: uploaded,
+        });
       },
     },
 
@@ -128,6 +136,14 @@
               ATTACH_BASE + encodeURIComponent(key) + "/" + existing.id,
               { method: "DELETE", headers: authHeaders() }
             );
+            // Mirror the delete into the in-memory bucket too -- see the
+            // matching comment in the upload branch below for why: removeVehiclePhoto()
+            // re-renders from window.data immediately, without reloading.
+            if (window.data && window.data.attachments && window.data.attachments[key]) {
+              window.data.attachments[key] = window.data.attachments[key].filter(
+                (item) => item.id !== existing.id
+              );
+            }
           }
           return jsonResponse({ success: true });
         }
@@ -141,7 +157,23 @@
         if (!file) return jsonResponse({ success: false, error: "no_file" }, 400);
 
         const record = await uploadTo(key, file);
-        return jsonResponse({ success: true, url: record.url, photo: record });
+
+        // uploadVehiclePhoto() in gm.render.settings.js re-renders immediately
+        // from the in-memory `data` object -- it never calls loadData() -- so
+        // without patching window.data here the new photo only appears after
+        // the next full reload. It also reads result.photoPath, which this
+        // response didn't use to carry.
+        if (window.data) {
+          const buckets = (window.data.attachments = window.data.attachments || {});
+          (buckets[key] = buckets[key] || []).push(record);
+        }
+
+        return jsonResponse({
+          success: true,
+          url: record.url,
+          photoPath: record.url,
+          photo: record,
+        });
       },
     },
 
