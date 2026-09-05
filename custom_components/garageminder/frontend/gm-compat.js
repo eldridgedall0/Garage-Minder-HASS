@@ -25,6 +25,33 @@
     return window.parent && window.parent.__gmBridge;
   }
 
+  /**
+   * The app's live dataset, if it exists yet.
+   *
+   * The app declares its dataset with `let data = null;` at the top level of
+   * gm.core.js -- a *classic* <script>, not a module. A top-level `let` (or
+   * `const`/`class`) creates a binding in the page's shared global lexical
+   * environment, not a property of `window`; that part is exactly like
+   * `var`-declared globals for every OTHER classic script that runs after it,
+   * but it means `window.data` is simply never set -- there is no such
+   * property, ever, regardless of what the app does. Every place below that
+   * used to read/write `window.data` was silently working with an object the
+   * app itself never sees or updates, so entryIdForAttachment() and
+   * currentPhoto() always fell through to their last-resort guess and
+   * misidentified which entry (or vehicle) owned an attachment.
+   *
+   * `data` (the bare identifier, no `window.` prefix) resolves through that
+   * same shared global scope, so it *does* reach the app's real dataset --
+   * as long as this only runs after gm.core.js has declared it, which is
+   * always true here: every caller of appData() runs from inside a fetch
+   * route handler, i.e. in response to something the user did after the app
+   * finished booting, never at this file's own top-level (this file loads
+   * before gm.core.js, so referencing `data` at parse time would throw).
+   */
+  function appData() {
+    return typeof data !== "undefined" ? data : null;
+  }
+
   function authHeaders() {
     return { Authorization: "Bearer " + bridge().accessToken() };
   }
@@ -136,11 +163,13 @@
               ATTACH_BASE + encodeURIComponent(key) + "/" + existing.id,
               { method: "DELETE", headers: authHeaders() }
             );
-            // Mirror the delete into the in-memory bucket too -- see the
-            // matching comment in the upload branch below for why: removeVehiclePhoto()
-            // re-renders from window.data immediately, without reloading.
-            if (window.data && window.data.attachments && window.data.attachments[key]) {
-              window.data.attachments[key] = window.data.attachments[key].filter(
+            // Mirror the delete into the app's live dataset too -- see the
+            // matching comment in the upload branch below for why:
+            // removeVehiclePhoto() re-renders from its `data` immediately,
+            // without reloading.
+            const app = appData();
+            if (app && app.attachments && app.attachments[key]) {
+              app.attachments[key] = app.attachments[key].filter(
                 (item) => item.id !== existing.id
               );
             }
@@ -160,11 +189,12 @@
 
         // uploadVehiclePhoto() in gm.render.settings.js re-renders immediately
         // from the in-memory `data` object -- it never calls loadData() -- so
-        // without patching window.data here the new photo only appears after
-        // the next full reload. It also reads result.photoPath, which this
-        // response didn't use to carry.
-        if (window.data) {
-          const buckets = (window.data.attachments = window.data.attachments || {});
+        // without patching it here the new photo only appears after the next
+        // full reload. It also reads result.photoPath, which this response
+        // didn't use to carry.
+        const app = appData();
+        if (app) {
+          const buckets = (app.attachments = app.attachments || {});
           (buckets[key] = buckets[key] || []).push(record);
         }
 
@@ -284,7 +314,7 @@
         // tools/build_frontend.py rewrites that call site to use
         // gmDownloadBackup() instead. This only has to satisfy the
         // pre-flight check and the toast that follows it.
-        const buckets = (window.data && window.data.attachments) || {};
+        const buckets = (appData() || {}).attachments || {};
         let count = 0;
         for (const key of Object.keys(buckets)) count += (buckets[key] || []).length;
         return jsonResponse({
@@ -360,13 +390,14 @@
    * attachments inline, so look the owner up there.
    */
   function entryIdForAttachment(attachmentId) {
-    const entries = (window.data && window.data.entries) || [];
+    const app = appData();
+    const entries = (app && app.entries) || [];
     for (const entry of entries) {
       for (const att of entry.attachments || []) {
         if (att.id === attachmentId) return entry.id;
       }
     }
-    const buckets = (window.data && window.data.attachments) || {};
+    const buckets = (app && app.attachments) || {};
     for (const key of Object.keys(buckets)) {
       if ((buckets[key] || []).some((a) => a.id === attachmentId)) return key;
     }
@@ -374,10 +405,8 @@
   }
 
   function currentPhoto(vehicleId) {
-    const bucket =
-      window.data &&
-      window.data.attachments &&
-      window.data.attachments[VEHICLE_PHOTO_KEY + vehicleId];
+    const app = appData();
+    const bucket = app && app.attachments && app.attachments[VEHICLE_PHOTO_KEY + vehicleId];
     return bucket && bucket.length ? bucket[bucket.length - 1] : null;
   }
 
