@@ -51,6 +51,70 @@
     });
   }
 
+  /**
+   * HA-only UI adjustments that are NOT part of the upstream `garageminder`
+   * web app and must never be made by editing it (see the No-Edit Rule).
+   * Both pieces are injected here, into the .nav bar and <head> that already
+   * exist in the static markup, so they don't depend on the app's own data
+   * load ever succeeding.
+   *
+   *  1. Hide the web app's WordPress "user menu" (avatar/name dropdown with
+   *     My Profile / Upgrade / Log Out, and its mobile-drawer twin). It only
+   *     renders when the loaded dataset has `multiUserEnabled: true` — which
+   *     a dataset restored from a web-app backup can carry over — and every
+   *     link in it (wp-admin/profile.php, wp-login.php?action=logout, ...)
+   *     is meaningless here: this integration has no WordPress and treats
+   *     one HA instance as one shared garage, not per-user accounts. Hidden
+   *     with CSS rather than deleted, so a future HA-native version (e.g.
+   *     showing the signed-in HA user) is a one-line change to bring back.
+   *
+   *  2. Add a "back to the Home Assistant dashboard" button. Custom panels
+   *     own the whole viewport — there is no HA toolbar above them to
+   *     navigate back with (see the comment on :host in gm-panel.js) — so
+   *     without this there is no way out of the panel except the sidebar.
+   */
+  function applyHaChrome() {
+    if (!document.getElementById("gm-ha-overrides")) {
+      const style = document.createElement("style");
+      style.id = "gm-ha-overrides";
+      style.textContent = [
+        "#user-menu, #drawer-user-section { display: none !important; }",
+        ".gm-ha-home-btn {",
+        "  display: inline-flex; align-items: center; gap: var(--gm-space-2);",
+        "  margin-left: auto; padding: var(--gm-space-2) var(--gm-space-4);",
+        "  background-color: var(--gm-btn-ghost-bg); color: var(--gm-btn-ghost-text);",
+        "  border: 1px solid var(--gm-btn-ghost-border); border-radius: var(--gm-radius);",
+        "  font-size: var(--gm-font-size-sm); font-weight: var(--gm-font-weight-medium);",
+        "  cursor: pointer; transition: all var(--gm-transition-fast); text-decoration: none;",
+        "}",
+        ".gm-ha-home-btn:hover { background-color: var(--gm-btn-ghost-bg-hover); color: var(--gm-btn-ghost-text-hover); }",
+        ".gm-ha-home-btn i { font-size: 1rem; }",
+      ].join("\n");
+      document.head.appendChild(style);
+    }
+
+    if (!document.getElementById("gm-ha-home-btn")) {
+      const nav = document.querySelector(".nav");
+      if (nav) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.id = "gm-ha-home-btn";
+        // Deliberately NOT class "nav-btn": gm.handlers.js does
+        // $(".nav-btn").on("click", ...) once, un-delegated, and calls
+        // navigateTo($(this).data("view")) -- a button with no data-view
+        // caught in that selector would call navigateTo(undefined). Styled
+        // to match via .gm-ha-home-btn (added above) instead.
+        btn.className = "gm-ha-home-btn";
+        btn.title = "Back to the Home Assistant dashboard";
+        btn.innerHTML = '<i class="bi bi-house-door-fill"></i> Home Assistant';
+        btn.addEventListener("click", function () {
+          window.parent.location.href = "/";
+        });
+        nav.appendChild(btn);
+      }
+    }
+  }
+
   function applyBranding(config) {
     document.title = config.appName || "GarageMinder";
 
@@ -75,6 +139,11 @@
   }
 
   async function boot() {
+    // Runs against the static markup that's already in the DOM, so it does
+    // not wait on the bridge or the data load -- the home button in
+    // particular should still work even if boot() fails below.
+    applyHaChrome();
+
     const bridge = await waitForBridge();
 
     const [config, dataset] = await Promise.all([
