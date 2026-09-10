@@ -54,9 +54,6 @@
   /**
    * HA-only UI adjustments that are NOT part of the upstream `garageminder`
    * web app and must never be made by editing it (see the No-Edit Rule).
-   * Both pieces are injected here, into the .nav bar and <head> that already
-   * exist in the static markup, so they don't depend on the app's own data
-   * load ever succeeding.
    *
    *  1. Hide the web app's WordPress "user menu" (avatar/name dropdown with
    *     My Profile / Upgrade / Log Out, and its mobile-drawer twin). It only
@@ -68,10 +65,18 @@
    *     with CSS rather than deleted, so a future HA-native version (e.g.
    *     showing the signed-in HA user) is a one-line change to bring back.
    *
-   *  2. Add a "back to the Home Assistant dashboard" button. Custom panels
+   *  2. Add a "back to the Home Assistant dashboard" button, both in the
+   *     desktop .nav bar and in the mobile hamburger drawer. Custom panels
    *     own the whole viewport — there is no HA toolbar above them to
    *     navigate back with (see the comment on :host in gm-panel.js) — so
    *     without this there is no way out of the panel except the sidebar.
+   *
+   * The desktop half (CSS + the .nav button) runs against markup that's
+   * already in the static HTML, so it's applied immediately. The mobile
+   * drawer (#mobile-nav-drawer) doesn't exist yet at that point -- it's
+   * built entirely by gm.mobile-nav.js, itself one of the app scripts this
+   * same boot() is still in the middle of injecting -- so a MutationObserver
+   * catches it whenever it actually appears instead of guessing a delay.
    */
   function applyHaChrome() {
     if (!document.getElementById("gm-ha-overrides")) {
@@ -89,6 +94,17 @@
         "}",
         ".gm-ha-home-btn:hover { background-color: var(--gm-btn-ghost-bg-hover); color: var(--gm-btn-ghost-text-hover); }",
         ".gm-ha-home-btn i { font-size: 1rem; }",
+        // Mirrors .drawer-nav-item (gm.22-mobile-nav.css) so it reads as a
+        // normal row in the drawer's nav list, not a bolted-on extra.
+        ".gm-ha-drawer-btn {",
+        "  display: flex; align-items: center; gap: 14px; width: 100%;",
+        "  padding: 14px 20px; background: transparent; border: none;",
+        "  color: var(--gm-text-muted); font-size: 1rem; text-align: left;",
+        "  cursor: pointer; transition: all var(--gm-transition);",
+        "}",
+        ".gm-ha-drawer-btn:hover { background: var(--gm-bg-hover); color: var(--gm-text-primary); }",
+        ".gm-ha-drawer-btn-icon { font-size: 1.25rem; width: 28px; text-align: center; }",
+        ".gm-ha-drawer-btn-label { font-weight: 500; }",
       ].join("\n");
       document.head.appendChild(style);
     }
@@ -107,12 +123,52 @@
         btn.className = "gm-ha-home-btn";
         btn.title = "Back to the Home Assistant dashboard";
         btn.innerHTML = '<i class="bi bi-house-door-fill"></i> Home Assistant';
-        btn.addEventListener("click", function () {
-          window.parent.location.href = "/";
-        });
+        btn.addEventListener("click", goToHaDashboard);
         nav.appendChild(btn);
       }
     }
+
+    addMobileHomeButtonWhenDrawerAppears();
+  }
+
+  function goToHaDashboard() {
+    window.parent.location.href = "/";
+  }
+
+  function addMobileHomeButtonToDrawer() {
+    if (document.getElementById("gm-ha-drawer-home-btn")) return;
+    const drawerNav = document.querySelector("#mobile-nav-drawer .drawer-nav");
+    if (!drawerNav) return;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.id = "gm-ha-drawer-home-btn";
+    // Not "drawer-nav-item": that class only matters for CSS here (see
+    // Gotcha about gm.handlers.js's un-delegated .nav-btn binding) -- this
+    // element is created after gm.mobile-nav.js's own bindEvents() already
+    // ran and captured its querySelectorAll('.drawer-nav-item') snapshot,
+    // so it would never receive handleNavClick anyway. Own class regardless,
+    // to not depend on that ordering staying true.
+    btn.className = "gm-ha-drawer-btn";
+    btn.innerHTML =
+      '<span class="gm-ha-drawer-btn-icon"><i class="bi bi-house-door-fill"></i></span>' +
+      '<span class="gm-ha-drawer-btn-label">Home Assistant</span>';
+    btn.addEventListener("click", goToHaDashboard);
+    drawerNav.appendChild(btn);
+  }
+
+  function addMobileHomeButtonWhenDrawerAppears() {
+    if (document.getElementById("mobile-nav-drawer")) {
+      addMobileHomeButtonToDrawer();
+      return;
+    }
+    const observer = new MutationObserver(function () {
+      if (document.getElementById("mobile-nav-drawer")) {
+        addMobileHomeButtonToDrawer();
+        observer.disconnect();
+      }
+    });
+    observer.observe(document.body, { childList: true });
   }
 
   function applyBranding(config) {

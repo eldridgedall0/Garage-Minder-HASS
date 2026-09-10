@@ -39,6 +39,16 @@
      * Create drawer HTML elements
      */
     function createDrawerElements() {
+        // The app was renamed from TrackMyWrench to GarageMinder; this drawer
+        // (and the preloader) were never updated off the old hardcoded name.
+        // Match the pattern gm.core.js already uses for siteTitle: read the
+        // real name from APP_CONFIG (set from PHP on the web app, or by
+        // gm-boot.js in the Home Assistant integration) with a sane fallback.
+        const appName = (typeof APP_CONFIG !== 'undefined' && APP_CONFIG.appName)
+            ? APP_CONFIG.appName
+            : 'GarageMinder';
+        const copyrightYear = new Date().getFullYear();
+
         // Create hamburger button
         const hamburger = document.createElement('button');
         hamburger.id = 'mobile-nav-hamburger';
@@ -68,7 +78,7 @@
                 <div class="drawer-brand">
                     <img src="assets/images/icon-64.png" alt="" class="drawer-logo">
                     <div class="drawer-titles">
-                        <span class="drawer-app-name">TrackMyWrench</span>
+                        <span class="drawer-app-name">${escapeHtml(appName)}</span>
                         <span id="drawer-site-title" class="drawer-site-title"></span>
                     </div>
                 </div>
@@ -106,7 +116,7 @@
                     <!-- User menu rendered here (multi-user only) -->
                 </div>
                 <div class="drawer-footer">
-                    <span>© 2025 Garage Maintenance</span>
+                    <span>© ${copyrightYear} ${escapeHtml(appName)}</span>
                 </div>
             </div>
         `;
